@@ -80,15 +80,21 @@ void make_solution(int number_of_variale)
     unsigned int number = (unsigned)number_of_variale;          //make signed int to unsigned int
 
     result[0] = determine_of_matrix(matrix,number);             // make determine for constant
-    for(size_t i=0;i<number;i++){
-        replace_column(i,number);
-        result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
+
+    if(result[0] != 0){                                       //divide by zero is not possible
+        for(size_t i=0;i<number;i++){
+            replace_column(i,number);
+            result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
+        }
+
+
+        cout<<"\n\nSolution is: "<<endl;
+        for(size_t i=1;i<=number;i++){
+            cout<<variable[i-1]<<" = "<<(double)result[i]/(double)result[0]<<endl;          //print solution
+        }
     }
-
-
-    cout<<"\n\nSolution is: "<<endl;
-    for(size_t i=1;i<=number;i++){
-        cout<<variable[i-1]<<" = "<<(double)result[i]/(double)result[0]<<endl;          //print solution
+    else{
+        cout<<"\n\n These equation has no solution"<<endl;
     }
 }
 
@@ -208,15 +214,23 @@ void create_matrix()
     }
 
     result[0] = determine_of_matrix(matrix,number);
-    for(size_t i=0;i<number;i++){
-        replace_column(i,number);
-        result[i+1] = determine_of_matrix(temp,number);         //calculate determine of matrix
+
+    if(result[0] != 0){                         //divide by is not posible
+        for(size_t i=0;i<number;i++){
+            replace_column(i,number);
+            result[i+1] = determine_of_matrix(temp,number);         //calculate determine of matrix
+        }
+
+
+        cout<<"Solution is: "<<endl;                    //print solution
+        for(size_t i=1;i<=number;i++){
+            cout<<"variable"<<i<<": "<<(double)result[i]/(double)result[0]<<endl;
+        }
+    }
+    else{
+        cout<<"\n\n These equation has no solution"<<endl;
     }
 
 
-    cout<<"Solution is: "<<endl;                    //print solution
-    for(size_t i=1;i<=number;i++){
-        cout<<"variable"<<i<<": "<<(double)result[i]/(double)result[0]<<endl;
-    }
 
 }

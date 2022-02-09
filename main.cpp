@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void linear_algebra_calculation()
+void linear_algebra_calculation()           //add infinite many solution
 {
     int choice;
 
