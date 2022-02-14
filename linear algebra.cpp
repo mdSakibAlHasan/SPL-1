@@ -19,6 +19,7 @@ int make_small_matrix(int arr[][SIZE], unsigned int number, unsigned int replace
     /*Here we calculate determine of matrix by reducing size of matrix, until matrix size will be 2.
     When its size will be 2, then it calculate and return value. This function reduce matrix size and
     make a small matrix*/
+
     int small_matrix[SIZE][SIZE],track=0;
     for(size_t i=1;i<number;i++){
         for(size_t j=0;j<number;j++){
@@ -39,6 +40,7 @@ int make_small_matrix(int arr[][SIZE], unsigned int number, unsigned int replace
 int determine_of_matrix(int arr[][SIZE], unsigned int number)
 {
     /*This function calculate determine of matrix*/
+
     if(number == 2){
         return (arr[0][0]*arr[1][1]) - (arr[0][1]*arr[1][0]);
     }
@@ -60,6 +62,7 @@ int determine_of_matrix(int arr[][SIZE], unsigned int number)
 void replace_column(unsigned int x, unsigned int number)
 {
     /*To find variable coefficient we need to replace column*/
+
     for(size_t i=0;i<number;i++){
         for(size_t j=0;j<number;j++){
             if(j == x){
@@ -129,7 +132,6 @@ int variable_match(char variable[][20], char store[], int *number_of_variable)
     }
     strcpy(variable[(*number_of_variable)],store);
     return (*number_of_variable)++;
-
 }
 
 
@@ -230,7 +232,4 @@ void create_matrix()
     else{
         cout<<"\n\n These equation has no solution"<<endl;
     }
-
-
-
 }
