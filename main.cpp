@@ -26,7 +26,7 @@ void linear_algebra_calculation()           //add infinite many solution
 int main()
 {
     //freopen("input_file.txt","r",stdin);
-    //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
+    freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
     linear_algebra_calculation();
     return 0;
 }

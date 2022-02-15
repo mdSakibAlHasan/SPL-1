@@ -7,20 +7,24 @@ using namespace std;
 #define OPERATOR 1
 #define NUMBER 2
 #define CHARACTER 3
+#define FRACTIONAL_POINT 4
 
-int matrix[SIZE][SIZE],temp[SIZE][SIZE];
-int determine_of_matrix(int arr[][SIZE], unsigned int number);
+double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
 char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'},operator_data[]={'+','-','='};
 char variable[SIZE][20], store[20];
+bool decimal_point;
+
+double determine_of_matrix(double arr[][SIZE], unsigned int number);
 
 
-int make_small_matrix(int arr[][SIZE], unsigned int number, unsigned int replace_number)
+int make_small_matrix(double arr[][SIZE], unsigned int number, unsigned int replace_number)
 {
     /*Here we calculate determine of matrix by reducing size of matrix, until matrix size will be 2.
     When its size will be 2, then it calculate and return value. This function reduce matrix size and
     make a small matrix*/
 
-    int small_matrix[SIZE][SIZE],track=0;
+    double small_matrix[SIZE][SIZE];
+    int track=0;
     for(size_t i=1;i<number;i++){
         for(size_t j=0;j<number;j++){
             if(j == replace_number){
@@ -37,7 +41,7 @@ int make_small_matrix(int arr[][SIZE], unsigned int number, unsigned int replace
 }
 
 
-int determine_of_matrix(int arr[][SIZE], unsigned int number)
+double determine_of_matrix(double arr[][SIZE], unsigned int number)
 {
     /*This function calculate determine of matrix*/
 
@@ -45,7 +49,7 @@ int determine_of_matrix(int arr[][SIZE], unsigned int number)
         return (arr[0][0]*arr[1][1]) - (arr[0][1]*arr[1][0]);
     }
     else{
-        int summation=0;
+        double summation=0;
         for(size_t i=0;i<number;i++){
             if(i%2 == 0){
                 summation += arr[0][i]*make_small_matrix(arr, number, i);
@@ -79,7 +83,7 @@ void replace_column(unsigned int x, unsigned int number)
 
 void make_solution(int number_of_variale)
 {
-    int result[SIZE];
+    double result[SIZE];
     unsigned int number = (unsigned)number_of_variale;          //make signed int to unsigned int
 
     result[0] = determine_of_matrix(matrix,number);             // make determine for constant
@@ -90,10 +94,9 @@ void make_solution(int number_of_variale)
             result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
         }
 
-
         cout<<"\n\nSolution is: "<<endl;
         for(size_t i=1;i<=number;i++){
-            cout<<variable[i-1]<<" = "<<(double)result[i]/(double)result[0]<<endl;          //print solution
+            cout<<variable[i-1]<<" = "<<result[i]/result[0]<<endl;          //print solution
         }
     }
     else{
@@ -117,6 +120,9 @@ int check_data_type(char item)
     else if(item == operator_data[0] || item == operator_data[1] || item == operator_data[2] || item == '\0'){
         return OPERATOR;                        //operator separate two variable
     }
+    else if(item == '.'){
+        return FRACTIONAL_POINT;
+    }
     else{
         return CHARACTER;
     }
@@ -139,7 +145,8 @@ int variable_match(char variable[][20], char store[], int *number_of_variable)
 int extrac_var_num(string str[], int n)
 {
 
-    int coefficient=0, number_of_variable=0,initial=0,store_index=0;
+    double coefficient=0;
+    int number_of_variable=0,initial=0,store_index=0,power_index=1;
 
     for(int i=0;i<n;i++){
         while(initial<=(int)str[i].size()){
@@ -148,7 +155,15 @@ int extrac_var_num(string str[], int n)
                 //continue;
             }
             else if(check_data_type(str[i][initial]) == NUMBER){
-                coefficient = (coefficient * 10) + (str[i][initial] - '0');
+                if(decimal_point){                      //there are a floating point
+                    coefficient += ((str[i][initial] - '0')/pow(10,power_index++));
+                }
+                else{                           //there are no floating point
+                    coefficient = (coefficient * 10) + (str[i][initial] - '0');
+                }
+            }
+            else if(check_data_type(str[i][initial]) == FRACTIONAL_POINT){
+                decimal_point = true;
             }
             else if(check_data_type(str[i][initial]) == CHARACTER){
                 store[store_index++] = str[i][initial];
@@ -156,8 +171,15 @@ int extrac_var_num(string str[], int n)
             else{
                 store[store_index] = '\0';                  //variable string terminated by NULL
                 store_index = 0;
-                matrix[i][variable_match(variable, store, &number_of_variable)] = coefficient;          //add number in matrix
+                if(coefficient == 0){                       //when there are no coefficient before variable, there are a default variable 1
+                    matrix[i][variable_match(variable, store, &number_of_variable)] = 1;
+                }
+                else{
+                    matrix[i][variable_match(variable, store, &number_of_variable)] = coefficient;   //add coefficient number in matrix
+                }
                 coefficient = 0;
+                power_index = 1;
+                decimal_point = false;
             }
             initial++;
         }
@@ -190,7 +212,6 @@ void take_input()
     int num = extrac_var_num(str, number);      //create a matrix and return number of variable
 
     make_solution(num);                     //print solution
-
 }
 
 
@@ -200,7 +221,7 @@ void create_matrix()
     /*This function use when user want to input only coefficient instate of
     input whole equation*/
     unsigned int number;
-    int result[SIZE];
+    double result[SIZE];
     cout<<"Input variable number: ";
     cin>>number;
 
