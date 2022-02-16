@@ -10,11 +10,12 @@ using namespace std;
 #define FRACTIONAL_POINT 4
 
 double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
-char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'},operator_data[]={'+','-','='};
+char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
 char variable[SIZE][20], store[20];
-bool decimal_point;
+bool decimal_point,isNegative = false;
 
 double determine_of_matrix(double arr[][SIZE], unsigned int number);
+
 
 
 int make_small_matrix(double arr[][SIZE], unsigned int number, unsigned int replace_number)
@@ -106,6 +107,7 @@ void make_solution(int number_of_variale)
 
 
 
+
 int check_data_type(char item)
 {
     int i=-1;
@@ -117,7 +119,7 @@ int check_data_type(char item)
     if(item == 32){
         return SPACE;           //it is an space
     }
-    else if(item == operator_data[0] || item == operator_data[1] || item == operator_data[2] || item == '\0'){
+    else if(item == '+' || item == '=' || item == '-' || item == '\0'){
         return OPERATOR;                        //operator separate two variable
     }
     else if(item == '.'){
@@ -172,18 +174,37 @@ int extrac_var_num(string str[], int n)
                 store[store_index] = '\0';                  //variable string terminated by NULL
                 store_index = 0;
                 if(coefficient == 0){                       //when there are no coefficient before variable, there are a default variable 1
-                    matrix[i][variable_match(variable, store, &number_of_variable)] = 1;
+                    coefficient = 1;
+                }
+                if(isNegative){            //there are negative value before variable
+                    coefficient *= -1;
+                }
+
+                if(str[i][initial] == '-'){            //there are negative value before variable
+                    isNegative = true;
                 }
                 else{
-                    matrix[i][variable_match(variable, store, &number_of_variable)] = coefficient;   //add coefficient number in matrix
+                    isNegative = false;
                 }
+
+                matrix[i][variable_match(variable, store, &number_of_variable)] = coefficient;   //add coefficient number in matrix
+
                 coefficient = 0;
                 power_index = 1;
                 decimal_point = false;
+
+
             }
             initial++;
         }
         initial = 0;        //index start with zero for next line
+    }
+
+    for(int i=0;i<=number_of_variable;i++){
+        for(int j=0;j<number_of_variable-1;j++){
+            cout<<matrix[i][j]<<" ";
+        }
+        cout<<endl;
     }
 
     return --number_of_variable;                //variable include constant part. So it reduce by one
