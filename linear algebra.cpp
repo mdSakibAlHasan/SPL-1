@@ -12,7 +12,7 @@ using namespace std;
 double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
 char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
 char variable[SIZE][20], store[20];
-bool decimal_point,isNegative = false;
+bool decimal_point,isNegative1, isNegative2,isEqual;
 
 double determine_of_matrix(double arr[][SIZE], unsigned int number);
 
@@ -119,8 +119,12 @@ int check_data_type(char item)
     if(item == 32){
         return SPACE;           //it is an space
     }
-    else if(item == '+' || item == '=' || item == '-' || item == '\0'){
+    else if(item == '+' || item == '=' || item == '\0'){
         return OPERATOR;                        //operator separate two variable
+    }
+    else if(item == '-'){
+        isNegative2 = true;
+        return OPERATOR;
     }
     else if(item == '.'){
         return FRACTIONAL_POINT;
@@ -144,13 +148,51 @@ int variable_match(char variable[][20], char store[], int *number_of_variable)
 
 
 
-int extrac_var_num(string str[], int n)
+
+void organize_variable(int variable_number)
+{
+    /* When we solve equation with matrix method, we need organize variable and locate constant in last*/
+    int d_index;
+
+    if(strlen(variable[variable_number-1]) != 0){
+
+        for(int i=0;i<variable_number-1;i++){
+            if(strlen(variable[i]) == 0){
+                d_index = i;
+            }
+        }
+
+        char vari_swap[20];
+        strcpy(vari_swap, variable[d_index]);                           //swap two variable
+        strcpy(variable[d_index], variable[variable_number-1]);
+        strcpy(variable[variable_number-1], vari_swap);
+
+        for(int i=0;i<variable_number-1;i++){                               //swap two matrix column
+            double x = matrix[i][d_index];
+            matrix[i][d_index] = matrix[i][variable_number-1];
+            matrix[i][variable_number-1] = x;
+        }
+    }
+
+    for(int i=0;i<variable_number-1;i++){
+        matrix[i][variable_number-1] *= -1;
+    }
+}
+
+
+int extrac_variable_number(string str[], int n)
 {
 
     double coefficient=0;
     int number_of_variable=0,initial=0,store_index=0,power_index=1;
 
+
     for(int i=0;i<n;i++){
+        isEqual = false;
+        isNegative1 = false;
+        isNegative2 = false;
+        decimal_point = false;
+
         while(initial<=(int)str[i].size()){
 
             if(check_data_type(str[i][initial]) == SPACE){              //If found space it will skip and check next
@@ -171,23 +213,25 @@ int extrac_var_num(string str[], int n)
                 store[store_index++] = str[i][initial];
             }
             else{
+
                 store[store_index] = '\0';                  //variable string terminated by NULL
                 store_index = 0;
-                if(coefficient == 0){                       //when there are no coefficient before variable, there are a default variable 1
+                if(coefficient == 0  && (strlen(store) != 0)){                       //when there are no coefficient before variable, there are a default variable 1
                     coefficient = 1;
                 }
-                if(isNegative){            //there are negative value before variable
+                if((isNegative1 && !isEqual) || (!isNegative1 && isEqual)){            //there are negative value before variable
                     coefficient *= -1;
                 }
 
-                if(str[i][initial] == '-'){            //there are negative value before variable
-                    isNegative = true;
-                }
-                else{
-                    isNegative = false;
-                }
+                isNegative1 = isNegative2;
+                isNegative2 = false;
 
-                matrix[i][variable_match(variable, store, &number_of_variable)] = coefficient;   //add coefficient number in matrix
+
+                matrix[i][variable_match(variable, store, &number_of_variable)] += coefficient;   //add coefficient number in matrix
+
+                if(str[i][initial] == '='){
+                    isEqual = true;
+                }
 
                 coefficient = 0;
                 power_index = 1;
@@ -200,12 +244,8 @@ int extrac_var_num(string str[], int n)
         initial = 0;        //index start with zero for next line
     }
 
-    for(int i=0;i<=number_of_variable;i++){
-        for(int j=0;j<number_of_variable-1;j++){
-            cout<<matrix[i][j]<<" ";
-        }
-        cout<<endl;
-    }
+
+    organize_variable(number_of_variable);
 
     return --number_of_variable;                //variable include constant part. So it reduce by one
 }
@@ -230,7 +270,7 @@ void take_input()
         getline(cin,str[i]);           //Input a line with space
     }
 
-    int num = extrac_var_num(str, number);      //create a matrix and return number of variable
+    int num = extrac_variable_number(str, number);      //create a matrix and return number of variable
 
     make_solution(num);                     //print solution
 }
