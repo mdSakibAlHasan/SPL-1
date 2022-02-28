@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1645159748 source:c:\users\hp\desktop\spl-1\main.cpp
+1646067564 source:c:\users\hp\desktop\spl-1\main.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
-1643908593 c:\users\hp\desktop\spl-1\linker.h
+1646067285 c:\users\hp\desktop\spl-1\linker.h
 
-1645164465 source:c:\users\hp\desktop\spl-1\linear algebra.cpp
+1646068755 source:c:\users\hp\desktop\spl-1\linear algebra.cpp
 	<bits/stdc++.h>
 	"linker.h"
 

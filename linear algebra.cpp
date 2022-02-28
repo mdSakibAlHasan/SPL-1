@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 #include "linker.h"
-#define SIZE 10
+#define SIZE 20
 using namespace std;
 
 #define SPACE 0
