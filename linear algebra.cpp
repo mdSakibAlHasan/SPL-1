@@ -85,12 +85,11 @@ void replace_column(unsigned int x, unsigned int number)
 bool check_infinite_solution(double result[], int number_of_variable)
 {
 	for(int i=1;i<=number_of_variable;i++){
-		if(result[i] > 1.1e+10){			//There are infinite solution if all determine are zero
-		cout<<" result "<<result[i];
-			//return false;
+		if(result[i] != 0){			//There are infinite solution if all determine are zero
+			return false;
 		}
 	}
-     cout<<"outside";
+
 	return true;
 }
 
@@ -102,12 +101,12 @@ void make_solution(int number_of_variale)
     int number = number_of_variale;          //make signed int to unsigned int
 
     result[0] = determine_of_matrix(matrix,number);             // make determine for constant
-
-    if(result[0] != 0){                                       //divide by zero is not possible
-        for(int i=0;i<number;i++){
+    for(int i=0;i<number;i++){
             replace_column(i,number);
             result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
-        }
+    }
+
+    if(result[0] != 0){                                       //divide by zero is not possible
 
         cout<<"\n\nSolution is: "<<endl;
         for(int i=1;i<=number;i++){
