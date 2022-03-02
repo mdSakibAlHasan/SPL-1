@@ -273,7 +273,7 @@ int extrac_variable_number(string str[], int n)
 
 
 
-void take_input()
+int take_input()
 {
     /*This function take equation as input, then separate variable and number.
     Input format: Constant must be locate after equation(=) sign.*/
@@ -289,9 +289,8 @@ void take_input()
         getline(cin,str[i]);           //Input a line with space
     }
 
-    int num = extrac_variable_number(str, number);      //create a matrix and return number of variable
+    return extrac_variable_number(str, number);      //create a matrix and return number of variable
 
-    make_solution(num);                     //print solution
 }
 
 
@@ -333,4 +332,29 @@ void create_matrix()
     else{
         cout<<"\n\n These equation has no solution"<<endl;
     }
+}
+
+
+void solve_linear_algebra()
+{
+    int vari_num = take_input();
+    make_solution(vari_num);
+}
+
+
+int solve_linear_programming(string str[], int line_number, double p_matrix[][SIZE], char vari_name[][20])
+{
+    int vari_num = extrac_variable_number(str, line_number);
+
+    for(int i=0;i<=vari_num;i++){          //copy matrix for linear programming
+        for(int j=0;j<=vari_num;j++){
+            p_matrix[i][j] = matrix[i][j];
+        }
+    }
+
+    for(int i=0;i<vari_num;i++){
+        strcpy(vari_name[i],variable[i]);
+    }
+
+    return vari_num;
 }

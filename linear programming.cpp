@@ -8,8 +8,9 @@ using namespace std;
 #define EQUAL 0
 
 
-int trace[SIZE],number_of_equation;
+int trace[SIZE],number_of_equation, number_of_variable;
 double matrix[SIZE][SIZE];
+char vari_name[SIZE][20];
 
 
 void remove_less_grater_sign(string &str, int index)
@@ -54,8 +55,23 @@ void input_linear_programming()
     cout<<"Input line one by one\n ";
     for(int i=0;i<number_of_equation;i++){
         getline(cin,str[i]);
+
         convert_to_equation(str[i], i);
-	//CALL TO EXTRACT VARIABLE AND MODIFY THIS FUNCTION
+    }
+
+
+    int number_of_variable = solve_linear_programming(str, number_of_equation, matrix, vari_name);
+
+    for(int i=0;i<=number_of_variable;i++){
+        for(int j=0;j<number_of_variable;j++){
+            cout<<matrix[i][j]<<"  ";
+        }
+
+        cout<<endl;
+    }
+
+    for(int i=0;i<=number_of_variable;i++){
+        cout<<"vari = "<<vari_name<<endl;
     }
 
 }
