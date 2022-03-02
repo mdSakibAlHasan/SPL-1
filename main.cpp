@@ -48,8 +48,8 @@ int i=0;
 
 int main()
 {
-    //freopen("input_file.txt","r",stdin);
-    freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
+    freopen("input_file.txt","r",stdin);
+    //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
     linear_algebra_calculation();
     return 0;
 }
