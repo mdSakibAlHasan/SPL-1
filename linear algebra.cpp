@@ -1,4 +1,6 @@
 #include<bits/stdc++.h>
+#include<iostream>
+#include<fstream>
 #include "linker.h"
 #define SIZE 20
 using namespace std;
@@ -342,19 +344,52 @@ void solve_linear_algebra()
 }
 
 
-int solve_linear_programming(string str[], int line_number, double p_matrix[][SIZE], char vari_name[][20])
+int  read_from_file(string str[])
 {
+    int line_number;
+
+    ofstream myfile;
+    myfile.open("new.txt");
+
+    if(myfile.is_open()){
+        //myfile >> line_number;
+
+        for(int i=0;i<line_number;i++){
+            getline(myfile, str[i]);
+        }
+
+        myfile.close();
+    }
+    else{
+        cout<<"Error opening file";
+    }
+
+    return line_number;
+}
+
+
+void solve_linear_programming()
+{
+
+    string str[SIZE];
+    int line_number = read_from_file(str);
     int vari_num = extrac_variable_number(str, line_number);
+
+
+    ofstream myfile;
+    myfile.open("new.txt");
+    myfile<<vari_num<<endl;
+
+    for(int i=0;i<vari_num;i++){
+        myfile<<variable[i]<<"\t";
+    }
 
     for(int i=0;i<=vari_num;i++){          //copy matrix for linear programming
         for(int j=0;j<=vari_num;j++){
-            p_matrix[i][j] = matrix[i][j];
+            myfile<<matrix[i][j]<<"\t";
         }
+
+        myfile<<endl;
     }
 
-    for(int i=0;i<vari_num;i++){
-        strcpy(vari_name[i],variable[i]);
-    }
-
-    return vari_num;
 }

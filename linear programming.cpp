@@ -45,6 +45,20 @@ void convert_to_equation(string &str, int equation_index_number)
 }
 
 
+void write_equation_in_file(string str[])
+{
+    ofstream myfile;
+    myfile.open("new.txt");
+    myfile<<number_of_equation<<endl;
+
+    for(int i=0;i<number_of_equation;i++){
+        myfile<<str[i]<<endl;
+    }
+
+    myfile.close();
+}
+
+
 void input_linear_programming()
 {
     string str[SIZE];
@@ -60,7 +74,9 @@ void input_linear_programming()
     }
 
 
-    int number_of_variable = solve_linear_programming(str, number_of_equation, matrix, vari_name);
+    write_equation_in_file(str);
+
+    solve_linear_programming();
 
     for(int i=0;i<=number_of_variable;i++){
         for(int j=0;j<number_of_variable;j++){
@@ -75,3 +91,4 @@ void input_linear_programming()
     }
 
 }
+
