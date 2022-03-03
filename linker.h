@@ -1,10 +1,6 @@
-
 using namespace std;
 
-void solve_linear_algebra();
+void solve_linear_equation();
 void create_matrix();
 
-void solve_linear_programming();
 void input_linear_programming();
-
-

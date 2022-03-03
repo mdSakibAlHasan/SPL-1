@@ -33,10 +33,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="linear algebra.cpp" />
-		<Unit filename="linear programming.cpp" />
 		<Unit filename="linker.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

@@ -91,4 +91,3 @@ void input_linear_programming()
     }
 
 }
-
