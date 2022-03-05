@@ -11,9 +11,8 @@ void linear_algebra_calculation()           //add infinite many solution
     cout<<"Input your choice: ";
     cin>>choice;
 
-
     if(choice == 1){
-        solve_linear_algebra();
+        solve_linear_equation();
     }
     else if(choice == 2){
         create_matrix();
@@ -25,12 +24,13 @@ void linear_algebra_calculation()           //add infinite many solution
 }
 
 
+
 int main()
 {
-    //freopen("input_file.txt","r",stdin);
-    //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
-
+    freopen("input_file.txt","r",stdin);
     input_linear_programming();
-    linear_algebra_calculation();
+
+    //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
+    //linear_algebra_calculation();
     return 0;
 }

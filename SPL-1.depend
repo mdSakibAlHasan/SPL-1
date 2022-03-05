@@ -1,44 +1,15 @@
 # depslib dependency file v1.0
-1646067564 source:c:\users\hp\desktop\spl-1\main.cpp
+1646479978 source:c:\users\hp\desktop\spl-1\main.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
-1646068755 
+1646312928 c:\users\hp\desktop\spl-1\linker.h
 
-1646067285 c:\users\hp\desktop\spl-1\linker.h
-
-1646068755 source:c:\users\hp\desktop\spl-1\linear algebra.cpp
+1646312839 source:c:\users\hp\desktop\spl-1\linear algebra.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
-1646213766 source:/home/sakiba/Desktop/SPL-1/linear algebra.cpp
-	<bits/stdc++.h>
-	"linker.h"
-
-1646215143 /home/sakiba/Desktop/SPL-1/linker.h
-
-1646215128 source:/home/sakiba/Desktop/SPL-1/main.cpp
-	<bits/stdc++.h>
-	"linker.h"
-
-1646244824 source:c:\users\hp\desktop\spl\main.cpp
-	<bits/stdc++.h>
-	"linker.h"
-
-1646245011 c:\users\hp\desktop\spl\linker.h
-	<bits/stdc++.h>
-
-1646244535 source:c:\users\hp\desktop\spl\linear algebra.cpp
-	<bits/stdc++.h>
-	"linker.h"
-
-1646278728 source:c:\users\hp\desktop\spl-1-main\main.cpp
-	<bits/stdc++.h>
-	"linker.h"
-
-1646280268 c:\users\hp\desktop\spl-1-main\linker.h
-
-1646280249 source:c:\users\hp\desktop\spl-1-main\linear programming.cpp
+1646479906 source:c:\users\hp\desktop\spl-1\linear programming.cpp
 	<bits/stdc++.h>
 	"linker.h"
 

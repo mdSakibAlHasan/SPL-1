@@ -1,6 +1,4 @@
 #include<bits/stdc++.h>
-#include<iostream>
-#include<fstream>
 #include "linker.h"
 #define SIZE 20
 using namespace std;
@@ -84,45 +82,26 @@ void replace_column(unsigned int x, unsigned int number)
 
 
 
-bool check_infinite_solution(double result[], int number_of_variable)
-{
-	for(int i=1;i<=number_of_variable;i++){
-		if(result[i] != 0){			//There are infinite solution if all determine are zero
-			return false;
-		}
-	}
-
-	return true;
-}
-
-
-
 void make_solution(int number_of_variale)
 {
     double result[SIZE];
-    int number = number_of_variale;          //make signed int to unsigned int
+    unsigned int number = (unsigned)number_of_variale;          //make signed int to unsigned int
 
     result[0] = determine_of_matrix(matrix,number);             // make determine for constant
-    for(int i=0;i<number;i++){
-            replace_column(i,number);
-            result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
-    }
 
     if(result[0] != 0){                                       //divide by zero is not possible
+        for(size_t i=0;i<number;i++){
+            replace_column(i,number);
+            result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
+        }
 
         cout<<"\n\nSolution is: "<<endl;
-        for(int i=1;i<=number;i++){
+        for(size_t i=1;i<=number;i++){
             cout<<variable[i-1]<<" = "<<result[i]/result[0]<<endl;          //print solution
         }
     }
     else{
-
-	     if(check_infinite_solution(result, number_of_variale)){
-		      cout<<"\n\n These equation has infinitely many solution"<<endl;
-         }
-	     else{
-              cout<<"\n\n These equation has no solution"<<endl;
-	     }
+        cout<<"\n\n These equation has no solution"<<endl;
     }
 }
 
@@ -275,12 +254,11 @@ int extrac_variable_number(string str[], int n)
 
 
 
-int take_input()
+int take_input(string str[])
 {
     /*This function take equation as input, then separate variable and number.
     Input format: Constant must be locate after equation(=) sign.*/
     unsigned int number;
-    string str[SIZE];
 
     cout<<"Input number of line: ";
     cin>>number;
@@ -291,8 +269,7 @@ int take_input()
         getline(cin,str[i]);           //Input a line with space
     }
 
-    return extrac_variable_number(str, number);      //create a matrix and return number of variable
-
+    return number;
 }
 
 
@@ -337,59 +314,31 @@ void create_matrix()
 }
 
 
-void solve_linear_algebra()
+
+void solve_linear_equation()
 {
-    int vari_num = take_input();
-    make_solution(vari_num);
-}
-
-
-int  read_from_file(string str[])
-{
-    int line_number;
-
-    ofstream myfile;
-    myfile.open("new.txt");
-
-    if(myfile.is_open()){
-        //myfile >> line_number;
-
-        for(int i=0;i<line_number;i++){
-            getline(myfile, str[i]);
-        }
-
-        myfile.close();
-    }
-    else{
-        cout<<"Error opening file";
-    }
-
-    return line_number;
-}
-
-
-void solve_linear_programming()
-{
-
     string str[SIZE];
-    int line_number = read_from_file(str);
-    int vari_num = extrac_variable_number(str, line_number);
+
+    int number = take_input(str);
+    int num = extrac_variable_number(str, number);      //create a matrix and return number of variable
+
+    make_solution(num);                     //print solution
+}
 
 
-    ofstream myfile;
-    myfile.open("new.txt");
-    myfile<<vari_num<<endl;
+int solve_linear_programming(string str[], double matrix_2[SIZE][SIZE], char vari_name[][20],int number)
+{
+     int num = extrac_variable_number(str, number);
 
-    for(int i=0;i<vari_num;i++){
-        myfile<<variable[i]<<"\t";
-    }
+     for(int i=0;i<num;i++){
+        strcpy(vari_name[i], variable[i]);
+     }
 
-    for(int i=0;i<=vari_num;i++){          //copy matrix for linear programming
-        for(int j=0;j<=vari_num;j++){
-            myfile<<matrix[i][j]<<"\t";
+     for(int i=0;i<=num;i++){
+        for(int j=0;j<=num;j++){
+            matrix_2[i][j] = matrix[i][j];
         }
+     }
 
-        myfile<<endl;
-    }
-
+     return num;
 }
