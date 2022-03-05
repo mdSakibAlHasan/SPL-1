@@ -13,6 +13,7 @@ double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
 char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
 char variable[SIZE][20], store[20];
 bool decimal_point,isNegative1, isNegative2,isEqual;
+//int variable_number;
 
 double determine_of_matrix(double arr[][SIZE], unsigned int number);
 
@@ -82,18 +83,33 @@ void replace_column(unsigned int x, unsigned int number)
 
 
 
-void make_solution(int number_of_variale)
+bool check_infinite_solution(double result[], int number_of_variable)
 {
+	for(int i=1;i<=number_of_variable;i++){
+		if(result[i] != 0){			//There are infinite solution if all determine are zero
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+
+void make_solution(int number_of_variable)
+{
+    //variable_number = number_of_variable;               //make it global variaable
     double result[SIZE];
-    unsigned int number = (unsigned)number_of_variale;          //make signed int to unsigned int
+    unsigned int number = (unsigned)number_of_variable;          //make signed int to unsigned int
 
     result[0] = determine_of_matrix(matrix,number);             // make determine for constant
 
-    if(result[0] != 0){                                       //divide by zero is not possible
-        for(size_t i=0;i<number;i++){
+    for(size_t i=0;i<number;i++){
             replace_column(i,number);
             result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
-        }
+    }
+
+    if(result[0] != 0){                                       //divide by zero is not possible
 
         cout<<"\n\nSolution is: "<<endl;
         for(size_t i=1;i<=number;i++){
@@ -101,9 +117,16 @@ void make_solution(int number_of_variale)
         }
     }
     else{
-        cout<<"\n\n These equation has no solution"<<endl;
+        if(check_infinite_solution(result, number_of_variable)){
+		      cout<<"\n\n These equation has infinitely many solution"<<endl;
+         }
+	     else{
+              cout<<"\n\n These equation has no solution"<<endl;
+	     }
     }
 }
+
+
 
 
 
@@ -296,11 +319,13 @@ void create_matrix()
 
     result[0] = determine_of_matrix(matrix,number);
 
-    if(result[0] != 0){                         //divide by is not posible
-        for(size_t i=0;i<number;i++){
+    for(size_t i=0;i<number;i++){
             replace_column(i,number);
             result[i+1] = determine_of_matrix(temp,number);         //calculate determine of matrix
-        }
+    }
+
+    if(result[0] != 0){                         //divide by is not posible
+
 
 
         cout<<"Solution is: "<<endl;                    //print solution
@@ -309,7 +334,12 @@ void create_matrix()
         }
     }
     else{
-        cout<<"\n\n These equation has no solution"<<endl;
+        if(check_infinite_solution(result, number)){
+		      cout<<"\n\n These equation has infinitely many solution"<<endl;
+         }
+	     else{
+              cout<<"\n\n These equation has no solution"<<endl;
+	     }
     }
 }
 
