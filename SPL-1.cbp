@@ -36,7 +36,7 @@
 		<Unit filename="linear programming.cpp" />
 		<Unit filename="linker.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="polynomial equation.cpp" />
+		<Unit filename="polynomial.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 			<code_completion />
