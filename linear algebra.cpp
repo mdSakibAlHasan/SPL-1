@@ -3,17 +3,9 @@
 #define SIZE 20
 using namespace std;
 
-#define SPACE 0
-#define OPERATOR 1
-#define NUMBER 2
-#define CHARACTER 3
-#define FRACTIONAL_POINT 4
 
 double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
-char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
 char variable[SIZE][20], store[20];
-bool decimal_point,isNegative1, isNegative2,isEqual;
-//int variable_number;
 
 double determine_of_matrix(double arr[][SIZE], unsigned int number);
 
