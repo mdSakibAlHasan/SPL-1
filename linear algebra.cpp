@@ -1,8 +1,20 @@
 #include<bits/stdc++.h>
 #include "linker.h"
-#define SIZE 20
+
+#define SPACE 0
+#define OPERATOR 1
+#define NUMBER 2
+#define CHARACTER 3
+#define FRACTIONAL_POINT 4
+#define POWER 5
+
 using namespace std;
 
+
+
+
+char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
+bool decimal_point,isNegative1, isNegative2,isEqual;
 
 double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
 char variable[SIZE][20], store[20];
@@ -143,6 +155,9 @@ int check_data_type(char item)
     }
     else if(item == '.'){
         return FRACTIONAL_POINT;
+    }
+    else if(item == '^'){
+        return POWER;
     }
     else{
         return CHARACTER;

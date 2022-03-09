@@ -2,7 +2,7 @@
 #include "linker.h"
 using namespace std;
 
-//#define SIZE 20
+#define SIZE 20
 #define LESS_THAN 1
 #define GRATER_THAN 2
 #define EQUAL 0
