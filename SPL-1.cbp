@@ -32,15 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="basic polynomial solve.cpp" />
 		<Unit filename="linear algebra.cpp" />
 		<Unit filename="linear programming.cpp" />
 		<Unit filename="linker.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="polynomial.cpp" />
+		<Unit filename="polynomial_equation.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

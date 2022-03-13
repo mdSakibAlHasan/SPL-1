@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "linker.h"
 
+
 using namespace std;
 
 void linear_algebra_calculation()           //add infinite many solution

@@ -57,7 +57,7 @@
 	<bits/stdc++.h>
 	"linker.h"
 
-1646833912 source:c:\users\hp\desktop\spl-1-main\main.cpp
+1647193323 source:c:\users\hp\desktop\spl-1-main\main.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
@@ -68,7 +68,16 @@
 	<bits/stdc++.h>
 	"linker.h"
 
-1646833888 source:c:\users\hp\desktop\spl-1-main\polynomial_equation.cpp
+1647195165 source:c:\users\hp\desktop\spl-1-main\polynomial_equation.cpp
 	<bits/stdc++.h>
 	"linker.h"
+	"linear.h"
+
+1646837448 source:c:\users\hp\desktop\spl-1-main\basic polynomial solve.cpp
+
+1647194070 source:c:\users\hp\desktop\spl-1-main\bairstow method.cpp
+	<bits/stdc++.h>
+	"linear.h"
+
+1647193135 c:\users\hp\desktop\spl-1-main\linear.h
 

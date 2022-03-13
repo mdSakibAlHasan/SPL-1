@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include "linker.h"
+#include "linear.h"
 
 #define space 0
 #define operator_symbol 1
@@ -17,6 +18,31 @@ char decimal_number[] = {'0','1','2','3','4','5','6','7','8','9'};
 bool is_equal = false,is_decimal = false, is_negative1= false, is_negative2 = false, is_power = false;
 
 double save[SIZE]={0};
+string global_str;
+
+
+bool check_variable_name(string str)
+{
+
+    if(str.size() == 0){
+        return true;
+    }
+
+    if(global_str.size() == 0){
+        global_str = str;
+
+        return true;
+    }
+    else{
+        if(global_str == str){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+}
 
 
 int data_type(char item)
@@ -33,7 +59,7 @@ int data_type(char item)
     else if(item == '+' || item == '=' || item == '\0'){
         return operator_symbol;                        //operator separate two variable
     }
-    else if(item == '-'){
+    else if(item == '-'){                               // if we find negative sign then next number should negative
         is_negative2 = true;
         return operator_symbol;
     }
@@ -52,27 +78,22 @@ int data_type(char item)
 
 int organize_equation(string str)
 {
-    int highest_power=0;
-
-
-
+    int highest_power=0;                    //save height power of this polynomial equation
     double coefficient=0;
     int power_coefficient=0,initial=0,store_index=0,power_index=1;
     char store[SIZE];
 
 
-//cout<<"str size "<<str.size();
         while(initial<=(int)str.size()){
 
-                //cout<<"\n initial  "<<initial<<" "<<str[initial]<<endl;
 
             if(data_type(str[initial]) == space){              //If found space it will skip and check next
                 //continue;
             }
-            else if(data_type(str[initial]) == number){ //cout<<" In number part ";
-                if(is_power){
+            else if(data_type(str[initial]) == number){
+
+                if(is_power){                                   //we found power, so next numbers are power coefficient
                       power_coefficient = (power_coefficient * 10) + (str[initial] - '0');
-                     // cout<<" power "<<power_coefficient<<endl;
                 }
                 else{
                     if(is_decimal){                      //there are a floating point
@@ -92,13 +113,16 @@ int organize_equation(string str)
             else if(data_type(str[initial]) == power){
                 is_power = true;
             }
-            else if(data_type(str[initial]) == power){
-                is_equal = true;
-            }
             else{
-                //cout<<" in calculation part ";
+
                 store[store_index] = '\0';                  //variable string terminated by NULL
                 store_index = 0;
+
+                if(!check_variable_name(store)){                    //a polynomial equation must have same variable name
+                    cout<<"Variable name doesn't match "<<endl;
+                    exit(1);
+                }
+
                 if(coefficient == 0  && (strlen(store) != 0)){                       //when there are no coefficient before variable, there are a default variable 1
                     coefficient = 1;
                 }
@@ -115,14 +139,13 @@ int organize_equation(string str)
 
 
                 save[power_coefficient] += coefficient;   //add coefficient number in matrix
-                //cout<<" iuuuuu "<<power_coefficient<<"  "<<save[power_coefficient]<<endl;
 
                 if(power_coefficient>highest_power){
                     highest_power = power_coefficient;
                 }
-                power_coefficient = 0;
+                power_coefficient = 0;                  //for next variable
 
-                if(str[initial] == '='){
+                if(str[initial] == '='){            //if we found equal then next all sign become opposite
                     is_equal = true;
                 }
 
@@ -133,15 +156,8 @@ int organize_equation(string str)
 
             }
             initial++;
-            //cout<<"Work";
 
         }
-
-
-
-
-
-
 
     return highest_power;
 
@@ -152,17 +168,22 @@ void input_controller()
 {
     string str;
 
-    cout<<"Input equation";
+    cout<<"\tInput a polynomial equation:\n\n\t\t";
     getline(cin,str);
 
 
-    int total_power = organize_equation(str);
+    int highest_power = organize_equation(str);
 
-    cout<<" Total power "<<total_power<<endl;
 
-    for(int i=0;i<=total_power;i++){
+
+    /*cout<<" Highest power "<<highest_power<<endl;
+    cout<<"Power \t coefficient\n";
+    for(int i=0;i<=highest_power;i++){
         cout<<i<<"  "<<save[i]<<endl;
-    }
+    }*/
+
+    starting_method(save, highest_power);
+
 }
 
 
