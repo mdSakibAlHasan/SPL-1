@@ -176,11 +176,11 @@ void input_controller()
 
 
 
-    /*cout<<" Highest power "<<highest_power<<endl;
+    cout<<" Highest power "<<highest_power<<endl;
     cout<<"Power \t coefficient\n";
     for(int i=0;i<=highest_power;i++){
         cout<<i<<"  "<<save[i]<<endl;
-    }*/
+    }
 
     starting_method(save, highest_power);
 

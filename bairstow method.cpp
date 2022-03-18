@@ -1,12 +1,13 @@
 #include<bits/stdc++.h>
 #include "linear.h"
 #define SIZE 20
-#define phi 1e-9
+#define phi 1e-12
 
 using namespace std;
 
 int n;
 double a[SIZE],b[SIZE],c[SIZE], r, s, old_r, old_s,dr,ds,root_p, root_q;
+bool last = false;
 
 
 double absolute(double x)
@@ -71,8 +72,22 @@ void synthetic_divisor(double x, double y)
 
 void print_root(double x,double p, double q)
 {
+
+
+
+
+    x = remove_error(x);
+    if(!last){
+        p = (-1)*remove_error(p);
+        q =(-1)*remove_error(q);
+    }
+    else{
+        p = remove_error(p);
+        q = remove_error(q);
+    }
+
     double determine = (p*p) - (4*x*q);
-    //cout<<"In root finding "<<x<<" "<<p<<" "<<q<<"  "<<determine<<endl;
+        cout<<"In root finding "<<x<<" "<<p<<" "<<q<<"  "<<determine<<" r = "<<r<<" s=  "<<s<<endl;
 
     if(determine<0){
         determine *= -1;
@@ -98,6 +113,12 @@ void print_root(double x,double p, double q)
         cout<<"Root: "<<second<<endl;
 
 
+    }
+
+    cout<<" print details\n";
+
+    for(int i=0;i<=n;i++){
+        cout<<a[i]<<" "<<b[i]<<" "<<c[i]<<endl;
     }
 
 
@@ -151,13 +172,38 @@ void calculate_column(double p[], double q[])
 
 
 
+void reduce_equation()
+{
+    for(int i=0;i<n-1;i++){
+        a[i] = b[i+2];
+    }
+
+    n -= 2;
+}
+
+
+
 
 
 void find_root()
 {
     double ratio_s, ratio_r;
 
-    while(1){
+
+    if(n == 0){
+        cout<<"No such variable.\n Wrong input\n\n";
+        exit(0);
+    }
+    else if(n == 1){
+        print_root(a[n], a[n-1]);
+    }
+    else if(n == 2){
+        print_root(a[n] , a[n-1] , a[n-2])
+    }
+    else{
+
+
+        while(1){
         calculate_column(a,b);
         calculate_column(b,c);
 
@@ -166,31 +212,41 @@ void find_root()
         ratio_s = ds/old_s;
         ratio_r = dr/old_r;
 
+       /* cout<<"print all value\n";
+        for(int i=0;i<=n;i++){
+            cout<<a[i]<<" "<<b[i]<<" "<<c[i]<<endl;
+        }*/
+
         if(((absolute(b[0]) <= phi) && (absolute(b[1]) <= phi)) || ((absolute(ratio_r) <= phi) || (absolute(ratio_s) <= phi))){
-            print_root(b[n],b[n-1],b[n-2]);
+            //print_root(b[n],b[n-1],b[n-2]);
 
-            synthetic_divisor(b[n-1],b[n-2]);
+            //synthetic_divisor(b[n-1],b[n-2]);
 
-            if(n == 2){
-                print_root(a[n],a[n-1],a[n-2]);
+            print_root(1,r,s);
+            //n -= 2;
+
+            if(n == 4){
+                last = true;            //for last part there no sign change
+
+                print_root(b[n],b[n-1],b[n-2]);
 
                 break;              //equation go to zero
             }
 
-            if(n == 1){
-                print_root_one(a[n], a[n-1]);
+            if(n == 3){
+                print_root_one(b[n], b[n-1]);
 
                 break;
             }
+
+            reduce_equation();
+
         }
 
     }
 
-    /*for(int i=0;i<=n;i++){
-        cout<<a[i]<<" "<<b[i]<<" "<<c[i]<<endl;
     }
-    cout<<"\n\n\n";
-*/
+
 
 }
 
