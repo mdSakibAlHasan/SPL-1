@@ -7,11 +7,12 @@ using namespace std;
 
 int n;
 double a[SIZE],b[SIZE],c[SIZE], r, s, old_r, old_s,dr,ds,root_p, root_q;
-bool last = false;
+bool last = false;          //for last rest equation
 
 
 double absolute(double x)
 {
+    //return absolute value
     if(x<0){
         x *= -1;
     }
@@ -24,8 +25,8 @@ double absolute(double x)
 
 double remove_error(double value)
 {
+    //floating point never goes to zero. for a particular error we need to avoid these error
     int integer = value;
-
     if(absolute(integer - value) <= phi){
 
         value = (double)integer;
@@ -36,72 +37,58 @@ double remove_error(double value)
 
 
 
-void synthetic_divisor(double x, double y)
-{
-    x *= -1;
-    y *= -1;
-
-    double sum = 1;
-
-    for(int i = n-1;i>0;i--){
-        //cout<<a[i]<<" "<<x<<" "<<sum<<endl;
-        a[i] += (x*sum);
-        a[i-1] += (y*sum);
-
-        sum = a[i];
-    }
-
-
-
-    n -= 2;     //equation reduce 2
-
-    for(int i=0;i<=n;i++){
-        a[i] = a[i+2];
-    }
-
-
-    //remove error
-    for(int i=0;i<=n;i++){
-        a[i] = remove_error(a[i]);
-        //cout<<"a "<<a[i]<<endl;
-    }
-
-}
-
 
 
 void print_root(double x,double p, double q)
 {
 
-
-
-
-    x = remove_error(x);
     if(!last){
+            //for r and s , we need to change sign of r and s
         p = (-1)*remove_error(p);
         q =(-1)*remove_error(q);
     }
     else{
+        // we find solution from rest of equation
         p = remove_error(p);
         q = remove_error(q);
     }
 
     double determine = (p*p) - (4*x*q);
-        cout<<"In root finding "<<x<<" "<<p<<" "<<q<<"  "<<determine<<" r = "<<r<<" s=  "<<s<<endl;
+
 
     if(determine<0){
         determine *= -1;
 
         determine = sqrt(determine);
-        //update pure imaginary number
-        //later
-        // update this
 
-        cout<<"Root: "<<((-p)/(2*x))<<" + "<<(determine/(2*x))<<"i"<<endl;
-        cout<<"Root: "<<((-p)/(2*x))<<" - "<<(determine/(2*x))<<"i"<<endl;
+        if(p == 0){
+                //pure imaginary number
+            if((determine/(2*x)) == 1){
+                    //coefficient 1 , not necessary to print
+                cout<<"\tRoot: "<<"i"<<endl;
+                cout<<"\tRoot: "<<"-i"<<endl;
+            }
+            else{
+                    //there are coefficient
+                cout<<"\tRoot: "<<(determine/(2*x))<<"i"<<endl;
+                cout<<"\tRoot: "<<(determine/(2*x))<<"-i"<<endl;
+            }
 
+        }
+        else{
+                //when not a pure imaginary number
+            if((determine/(2*x)) == 1){
+                    //coefficient 1 , not necessary to print
+                cout<<"\tRoot: "<<((-p)/(2*x))<<" + "<<"i"<<endl;
+                cout<<"\tRoot: "<<((-p)/(2*x))<<" - "<<"i"<<endl;
+            }
+            else{
+                    //there are coefficient
+                cout<<"\tRoot: "<<((-p)/(2*x))<<" + "<<(determine/(2*x))<<"i"<<endl;
+                cout<<"\tRoot: "<<((-p)/(2*x))<<" - "<<(determine/(2*x))<<"i"<<endl;
+            }
 
-
+        }
     }
     else{
         determine = sqrt(determine);
@@ -109,31 +96,25 @@ void print_root(double x,double p, double q)
         double first = remove_error(((-p) - determine)/(2*x));
         double second =  remove_error(((-p) + determine)/(2*x));
 
-        cout<<"Root: "<<first<<endl;
-        cout<<"Root: "<<second<<endl;
+        cout<<"\tRoot: "<<first<<endl;
+        cout<<"\tRoot: "<<second<<endl;
 
 
     }
-
-    cout<<" print details\n";
-
-    for(int i=0;i<=n;i++){
-        cout<<a[i]<<" "<<b[i]<<" "<<c[i]<<endl;
-    }
-
-
 
 }
 
 
+
 void print_root_one(double x, double y)
 {
+    // If existance equation has only one solution
     x *= -1;
     y *= -1;
 
     double root = -(y/x);
 
-    cout<<"Root: "<<root<<endl;
+    cout<<"\tRoot: "<<root<<endl;
 
 }
 
@@ -144,7 +125,7 @@ void print_root_one(double x, double y)
 
 void calculate_r_s()
 {
-
+    //for iteration we need to find r and s. From r and s we find two solution of equation
 
     dr = (b[0]*c[3] - b[1]*c[2]) / (c[2]*c[2] - c[1]*c[3]);
 
@@ -161,6 +142,7 @@ void calculate_r_s()
 
 void calculate_column(double p[], double q[])
 {
+    //iteration column to find solution
     q[n] = p[n];
     q[n-1] = p[n-1] + q[n]*r;
 
@@ -174,6 +156,8 @@ void calculate_column(double p[], double q[])
 
 void reduce_equation()
 {
+    //After iteration we find two solution and the equations's power reduce by two.
+    //Replace a[] coefficient by b[] coefficient
     for(int i=0;i<n-1;i++){
         a[i] = b[i+2];
     }
@@ -187,6 +171,7 @@ void reduce_equation()
 
 void find_root()
 {
+    //iteration until equation goes to power 1 or 2
     double ratio_s, ratio_r;
 
 
@@ -195,64 +180,57 @@ void find_root()
         exit(0);
     }
     else if(n == 1){
-        print_root(a[n], a[n-1]);
+        print_root_one(a[n], a[n-1]);
     }
     else if(n == 2){
-        print_root(a[n] , a[n-1] , a[n-2])
+        print_root(a[n] , a[n-1] , a[n-2]);
     }
     else{
 
 
         while(1){
-        calculate_column(a,b);
-        calculate_column(b,c);
+            calculate_column(a,b);
+            calculate_column(b,c);
 
-        calculate_r_s();
+            calculate_r_s();
 
-        ratio_s = ds/old_s;
-        ratio_r = dr/old_r;
+            ratio_s = ds/old_s;
+            ratio_r = dr/old_r;
 
-       /* cout<<"print all value\n";
-        for(int i=0;i<=n;i++){
-            cout<<a[i]<<" "<<b[i]<<" "<<c[i]<<endl;
-        }*/
 
-        if(((absolute(b[0]) <= phi) && (absolute(b[1]) <= phi)) || ((absolute(ratio_r) <= phi) || (absolute(ratio_s) <= phi))){
-            //print_root(b[n],b[n-1],b[n-2]);
+            if(((absolute(b[0]) <= phi) && (absolute(b[1]) <= phi)) || ((absolute(ratio_r) <= phi) || (absolute(ratio_s) <= phi))){
 
-            //synthetic_divisor(b[n-1],b[n-2]);
+                print_root(1,r,s);
 
-            print_root(1,r,s);
-            //n -= 2;
+                if(n == 4){
+                    last = true;            //for last part there no sign change
 
-            if(n == 4){
-                last = true;            //for last part there no sign change
+                    print_root(b[n],b[n-1],b[n-2]);
 
-                print_root(b[n],b[n-1],b[n-2]);
+                    break;              //equation go to zero
+                }
 
-                break;              //equation go to zero
+                if(n == 3){
+                    print_root_one(b[n], b[n-1]);
+
+                    break;
+                }
+
+                reduce_equation();
+
             }
-
-            if(n == 3){
-                print_root_one(b[n], b[n-1]);
-
-                break;
-            }
-
-            reduce_equation();
 
         }
-
-    }
 
     }
 
 
 }
 
+
 void starting_method(double pass[], int total)
 {
-
+    //copy array to global array
     for(int i= total;i>=0;i--){
         a[i] = pass[i];
 
@@ -264,11 +242,11 @@ void starting_method(double pass[], int total)
     s = a[n-2]/a[n];
 
     if(r == 0){
-        r = 0.1;
+        r = 0.1;        //default value of r
     }
 
     if(s ==0){
-        s = 0.1;
+        s = 0.1;        //default value of s
     }
 
     find_root();

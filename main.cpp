@@ -8,7 +8,7 @@ void linear_algebra_calculation()           //add infinite many solution
 {
     cout<<"\n\n\n WELCOME TO EQUATON SOLVER\n\n\n";
     int choice;
-    cout<<"\t\t1.Linear algebra\n\t\t2.Linear programming\n\n..........";
+    cout<<"\t\t1.Linear algebra\n\t\t2.Linear programming\n\t3.Polynomial equation\n\n..........";
     cin>>choice;
 
     if(choice == 1){
@@ -30,6 +30,12 @@ void linear_algebra_calculation()           //add infinite many solution
     else if(choice == 2){
         input_linear_programming();
     }
+    else if(choice == 3){
+        input_controller();
+    }
+    else{
+        cout<<"Wrong input"<<endl;
+    }
 
 
 }
@@ -38,12 +44,13 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    freopen("input.txt","r",stdin);
+    //freopen("input.txt","r",stdin);
 
 
     //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
-    //linear_algebra_calculation();
+    linear_algebra_calculation();
 
-    input_controller();
+    //input_controller();
+    //input_linear_programming();
     return 0;
 }

@@ -290,6 +290,8 @@ void input_linear_programming()
 
     number_of_variable = solve_linear_programming(str,matrix_2,vari_name, number_of_equation+1);
 
+    cout<<" number of "<<number_of_variable<<endl;
+
 
     cout<<"\n\n\n\n\n";
 

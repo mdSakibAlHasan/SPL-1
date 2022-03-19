@@ -168,19 +168,13 @@ void input_controller()
 {
     string str;
 
-    cout<<"\tInput a polynomial equation:\n\n\t\t";
+    getchar();
+    cout<<"\tInput a polynomial equation:\n\n";
     getline(cin,str);
 
 
     int highest_power = organize_equation(str);
 
-
-
-    cout<<" Highest power "<<highest_power<<endl;
-    cout<<"Power \t coefficient\n";
-    for(int i=0;i<=highest_power;i++){
-        cout<<i<<"  "<<save[i]<<endl;
-    }
 
     starting_method(save, highest_power);
 
