@@ -120,6 +120,12 @@ void print_value()
         final_value[number_of_equation+number_of_variable] *= -1;
     }
 
+    cout<<"\n print value all"<<endl;
+    for(int i=0;i<=number_of_equation+number_of_variable;i++){
+        cout<<vari_name[i]<<" "<<CB_value[i]<<endl;
+    }
+    cout<<"end \n\n\n";
+
     int j;
     for(int i=0;i<number_of_variable;i++){
         for(j=0;j<number_of_equation;j++){

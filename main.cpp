@@ -44,13 +44,12 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    //freopen("input.txt","r",stdin);
+    freopen("input.txt","r",stdin);
 
 
-    //freopen("C:\\Users\\HP\\Desktop\\input_SPL.txt","r",stdin);
-    linear_algebra_calculation();
+    //linear_algebra_calculation();
 
     //input_controller();
-    //input_linear_programming();
+    input_linear_programming();
     return 0;
 }
