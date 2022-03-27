@@ -50,6 +50,7 @@ int main()
     //linear_algebra_calculation();
 
     //input_controller();
-    input_linear_programming();
+    solve_linear_equation();
+    //input_linear_programming();
     return 0;
 }

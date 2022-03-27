@@ -47,6 +47,51 @@ int make_small_matrix(double arr[][SIZE], unsigned int number, unsigned int repl
 }
 
 
+double det_of_matrix(double arr[][SIZE], unsigned int number)
+{
+
+    for(size_t i=0;i<number;i++)
+    {
+        for(size_t j=number-1;j>=i;j--)
+        {
+            if(arr[j][i] == 0){
+                continue;
+            }
+            else{
+                if(arr[j-1][i] == 0){
+                    //exchange row
+                    for(size_t x =0;x<number;x++){
+                        double temp = arr[j][x];
+                        arr[j][x] = arr[j-1][x];
+                        arr[j-1][x] = temp;
+                    }
+
+                    continue;
+                }
+
+               double req_ratio = arr[j][i] / arr[j-1][i];
+
+                for(size_t k =0;k<number;k++){
+                    arr[j][k] = arr[j][k] - req_ratio * arr[j-1][k];
+                }
+
+
+            }
+        }
+    }
+
+    //calculate determine
+
+    double sum =1;
+    for(size_t i=0;i<number;i++){
+        sum *= arr[i][i];
+    }
+
+    return sum;
+}
+
+
+
 double determine_of_matrix(double arr[][SIZE], unsigned int number)
 {
     /*This function calculate determine of matrix*/
@@ -106,7 +151,8 @@ void make_solution(int number_of_variable)
     double result[SIZE];
     unsigned int number = (unsigned)number_of_variable;          //make signed int to unsigned int
 
-    result[0] = determine_of_matrix(matrix,number);             // make determine for constant
+    //result[0] = determine_of_matrix(matrix,number);             // make determine for constant
+    result[0] = det_of_matrix(matrix,number);             // make determine for constant
 
     for(size_t i=0;i<number;i++){
             replace_column(i,number);
