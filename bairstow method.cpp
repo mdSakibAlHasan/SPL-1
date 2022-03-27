@@ -17,7 +17,6 @@ double absolute(double x)
         x *= -1;
     }
 
-
     return x;
 }
 
@@ -73,7 +72,6 @@ void print_root(double x,double p, double q)
                 cout<<"\tRoot: "<<(determine/(2*x))<<"i"<<endl;
                 cout<<"\tRoot: "<<(determine/(2*x))<<"-i"<<endl;
             }
-
         }
         else{
                 //when not a pure imaginary number
@@ -87,7 +85,6 @@ void print_root(double x,double p, double q)
                 cout<<"\tRoot: "<<((-p)/(2*x))<<" + "<<(determine/(2*x))<<"i"<<endl;
                 cout<<"\tRoot: "<<((-p)/(2*x))<<" - "<<(determine/(2*x))<<"i"<<endl;
             }
-
         }
     }
     else{
@@ -99,9 +96,7 @@ void print_root(double x,double p, double q)
         cout<<"\tRoot: "<<first<<endl;
         cout<<"\tRoot: "<<second<<endl;
 
-
     }
-
 }
 
 
@@ -115,7 +110,6 @@ void print_root_one(double x, double y)
     double root = -(y/x);
 
     cout<<"\tRoot: "<<root<<endl;
-
 }
 
 
@@ -128,7 +122,6 @@ void calculate_r_s()
     //for iteration we need to find r and s. From r and s we find two solution of equation
 
     dr = (b[0]*c[3] - b[1]*c[2]) / (c[2]*c[2] - c[1]*c[3]);
-
     ds = (b[1]*c[1] - b[0]*c[2]) / (c[2]*c[2] - c[1]*c[3]);
 
     old_r = r ;
@@ -136,7 +129,6 @@ void calculate_r_s()
 
     r += dr;
     s += ds;
-
 }
 
 
@@ -149,7 +141,6 @@ void calculate_column(double p[], double q[])
     for(int i=n-2;i>=0;i--){
         q[i] = p[i] + (q[i+1]*r) + (q[i+2]*s);
     }
-
 }
 
 
@@ -174,7 +165,6 @@ void find_root()
     //iteration until equation goes to power 1 or 2
     double ratio_s, ratio_r;
 
-
     if(n == 0){
         cout<<"No such variable.\n Wrong input\n\n";
         exit(0);
@@ -186,7 +176,6 @@ void find_root()
         print_root(a[n] , a[n-1] , a[n-2]);
     }
     else{
-
 
         while(1){
             calculate_column(a,b);
@@ -204,27 +193,19 @@ void find_root()
 
                 if(n == 4){
                     last = true;            //for last part there no sign change
-
                     print_root(b[n],b[n-1],b[n-2]);
-
                     break;              //equation go to zero
                 }
 
                 if(n == 3){
                     print_root_one(b[n], b[n-1]);
-
                     break;
                 }
 
                 reduce_equation();
-
             }
-
         }
-
     }
-
-
 }
 
 
@@ -250,6 +231,5 @@ void starting_method(double pass[], int total)
     }
 
     find_root();
-
 }
 

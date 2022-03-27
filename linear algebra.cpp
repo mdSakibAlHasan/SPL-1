@@ -10,41 +10,12 @@
 
 using namespace std;
 
-
-
-
 char numeric_data[]={'0','1','2','3','4','5','6','7','8','9'};
 bool decimal_point,isNegative1, isNegative2,isEqual;
 
 double matrix[SIZE][SIZE]={0},temp[SIZE][SIZE];
 char variable[SIZE][20], store[20];
 
-double determine_of_matrix(double arr[][SIZE], unsigned int number);
-
-
-
-int make_small_matrix(double arr[][SIZE], unsigned int number, unsigned int replace_number)
-{
-    /*Here we calculate determine of matrix by reducing size of matrix, until matrix size will be 2.
-    When its size will be 2, then it calculate and return value. This function reduce matrix size and
-    make a small matrix*/
-
-    double small_matrix[SIZE][SIZE];
-    int track=0;
-    for(size_t i=1;i<number;i++){
-        for(size_t j=0;j<number;j++){
-            if(j == replace_number){
-                continue;
-            }
-            else{
-                small_matrix[i-1][track++] = arr[i][j];
-            }
-        }
-        track = 0;
-    }
-
-    return determine_of_matrix(small_matrix, number-1);
-}
 
 
 double det_of_matrix(double arr[][SIZE], unsigned int number)
@@ -52,7 +23,7 @@ double det_of_matrix(double arr[][SIZE], unsigned int number)
 
     for(size_t i=0;i<number;i++)
     {
-        for(size_t j=number-1;j>=i;j--)
+        for(size_t j=number-1;j>i;j--)
         {
             if(arr[j][i] == 0){
                 continue;
@@ -65,7 +36,6 @@ double det_of_matrix(double arr[][SIZE], unsigned int number)
                         arr[j][x] = arr[j-1][x];
                         arr[j-1][x] = temp;
                     }
-
                     continue;
                 }
 
@@ -74,43 +44,36 @@ double det_of_matrix(double arr[][SIZE], unsigned int number)
                 for(size_t k =0;k<number;k++){
                     arr[j][k] = arr[j][k] - req_ratio * arr[j-1][k];
                 }
-
-
             }
         }
     }
-
     //calculate determine
 
     double sum =1;
     for(size_t i=0;i<number;i++){
         sum *= arr[i][i];
     }
+    //cout<<"result is: "<<sum<<endl;
 
     return sum;
 }
 
 
 
-double determine_of_matrix(double arr[][SIZE], unsigned int number)
+double find_determine(double arr[][SIZE], unsigned int number)
 {
-    /*This function calculate determine of matrix*/
+    //this function make a temporary array and calculate this
 
-    if(number == 2){
-        return (arr[0][0]*arr[1][1]) - (arr[0][1]*arr[1][0]);
-    }
-    else{
-        double summation=0;
-        for(size_t i=0;i<number;i++){
-            if(i%2 == 0){
-                summation += arr[0][i]*make_small_matrix(arr, number, i);
-            }
-            else{
-                summation -= arr[0][i]*make_small_matrix(arr, number, i);
-            }
+    double sakib[SIZE][SIZE];
+
+    for(size_t i=0;i<number;i++)
+    {
+        for(size_t j=0;j<number;j++){
+            sakib[i][j] = arr[i][j];
         }
-        return summation;
     }
+
+    return det_of_matrix(sakib, number);
 }
 
 
@@ -152,11 +115,11 @@ void make_solution(int number_of_variable)
     unsigned int number = (unsigned)number_of_variable;          //make signed int to unsigned int
 
     //result[0] = determine_of_matrix(matrix,number);             // make determine for constant
-    result[0] = det_of_matrix(matrix,number);             // make determine for constant
+    result[0] = find_determine(matrix,number);             // make determine for constant
 
     for(size_t i=0;i<number;i++){
             replace_column(i,number);
-            result[i+1] = determine_of_matrix(temp,number);         //find determine for each variable
+            result[i+1] = find_determine(temp,number);         //find determine for each variable
     }
 
     if(result[0] != 0){                                       //divide by zero is not possible
@@ -370,11 +333,11 @@ void create_matrix()
         }
     }
 
-    result[0] = determine_of_matrix(matrix,number);
+    result[0] = find_determine(matrix,number);
 
     for(size_t i=0;i<number;i++){
             replace_column(i,number);
-            result[i+1] = determine_of_matrix(temp,number);         //calculate determine of matrix
+            result[i+1] = find_determine(temp,number);         //calculate determine of matrix
     }
 
     if(result[0] != 0){                         //divide by is not posible

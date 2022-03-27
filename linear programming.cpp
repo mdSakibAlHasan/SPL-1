@@ -47,7 +47,6 @@ void calculate_table()
         final_value[i] = ( matrix_2[number_of_equation][i] - final_value[i]);
     }
 
-
 }
 
 
