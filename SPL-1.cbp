@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="bairstow method.cpp" />
+		<Unit filename="handle_data.cpp" />
 		<Unit filename="history.cpp" />
 		<Unit filename="linear algebra.cpp" />
 		<Unit filename="linear programming.cpp" />

@@ -51,13 +51,13 @@
 	<bits/stdc++.h>
 	"linker.h"
 
-1646833606 c:\users\hp\desktop\spl-1-main\linker.h
+1648739515 c:\users\hp\desktop\spl-1-main\linker.h
 
 1648371337 source:c:\users\hp\desktop\spl-1-main\linear programming.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
-1648363891 source:c:\users\hp\desktop\spl-1-main\main.cpp
+1648918220 source:c:\users\hp\desktop\spl-1-main\main.cpp
 	<bits/stdc++.h>
 	"linker.h"
 
@@ -79,5 +79,12 @@
 	<bits/stdc++.h>
 	"linear.h"
 
-1647193135 c:\users\hp\desktop\spl-1-main\linear.h
+1648739282 c:\users\hp\desktop\spl-1-main\linear.h
+
+1648374332 source:c:\users\hp\desktop\spl-1-main\history.cpp
+	<bits/stdc++.h>
+
+1648918132 source:c:\users\hp\desktop\spl-1-main\handle_data.cpp
+	<bits/stdc++.h>
+	"linker.h"
 

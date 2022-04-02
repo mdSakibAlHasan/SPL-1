@@ -1,11 +1,12 @@
 
 #include<bits/stdc++.h>
-#define SIZE 100
+#include "linker.h"
+//#define SIZE 100
 using namespace std;
 
 
 
-double det_of_matrix(double arr[][SIZE], unsigned int number)
+double det_of_matrix(double arr[][100], unsigned int number)
 {
 
     for(size_t i=0;i<number;i++)
@@ -62,6 +63,12 @@ vector<double> read_from_file(int row, int column,int index)
 
     }
 
+    /*cout<<"\n check input ";
+    for(size_t i=0;i<line.size();i++){
+        cout<<line[i]<<" ";
+    }
+    cout<<endl;*/
+
     return line;
 }
 
@@ -93,50 +100,100 @@ bool is_zero(vector<double>line, int index)
 }
 
 
-void save_transpose_file(int row, int column)
+void sample(int number)
 {
+    vector<double> new_line,old_line;
+    old_line = read_from_file(0);
+
+    for(int i=0;i<number;i++){
+        new_line = read_from_file(i+1);
+        for(int j=number-1;j>i;j--){
+
+            double ratio_col = old_line[j]/new_line[i];
+
+            old_line[i] -= ()
+
+        }
+    }
+}
+
+
+void save_transpose_file(int number, int column)
+{
+    cout<<"uyurytuyt"<<endl;
     ofstream file_name("transpose.txt");
     vector<double> new_line,old_line;
 
+    old_line = read_from_file(number, column, number-1);
 
-    for(int i=0;i<row;i++){
+    for(size_t i=0;i<number;i++)
+    {
+        new_line = read_from_file(number, column, number-i-2);
+        for(size_t j=number-1;j>i;j--)
+        {
+            if(old_line[i] == 0){
 
-        new_line = read_from_file(row,column,i);
-        /*if(is_zero(new_line,i)){
-            for(int k=0;k<column;k++){
-                double p = new_line[i];
-                new_line[i] = old_line[i];
-                old_line[i] = p;
+                for(int s=0;s<old_line.size();s++){
+                    cout<<old_line[s]<<" ";
+                }
+                cout<<endl;
+                continue;
+            }
+            else{
+                if(new_line[i] == 0){
+                    //exchange row
+                    /*for(size_t x =0;x<number;x++){
+                        double temp = arr[j][x];
+                        arr[j][x] = arr[j-1][x];
+                        arr[j-1][x] = temp;
+                    }*/
+                    vector<double> v1;
+                    v1.insert(v1.end(), new_line.begin(), new_line.end());
+                    new_line.clear();
+                    new_line.insert(new_line.end(), old_line.begin(), old_line.end());
+                    old_line.clear();
+                    old_line.insert(old_line.end(), new_line.begin(), new_line.end());
+
+                    for(int s=0;s<old_line.size();s++){
+                    cout<<old_line[s]<<" ";
+                    }
+                    cout<<endl;
+                    continue;
+                }
+
+               double req_ratio = old_line[i] / new_line[i];
+               //cout<<"Ratio "<<req_ratio<<endl;
+
+                for(size_t k =0;k<number;k++){
+                        //cout<<old_line[k]<<" "<<new_line[k]<<endl;
+                    old_line[k] = old_line[k] - req_ratio * new_line[k];
+                }
+
+                for(int s=0;s<old_line.size();s++){
+                    cout<<old_line[s]<<" ";
+                }
+                cout<<endl;
             }
         }
-
-        if(i != 0){
-            for(int j=0;j<old_line.size();j++){
-                file_name<<old_line[i]<<endl;
-            }
-        }
-
-        for(int k=0;k<column;k++){
-            old_line[i] = new_line[i];
-        }*/
-
-        for(int j=0;j<new_line.size();j++){
-            file_name<<new_line[j]<<"\t";
-        }
-        file_name<<endl;
-
-
-        cout<<"One line complete"<<endl;
-        new_line.clear();
-
     }
+    //calculate determine
 
+    /*double sum =1;
+    for(size_t i=0;i<number;i++){
+        //sum *= arr[i][i];
+        cout<<2
+    }*/
+    //cout<<"result is: "<<sum<<endl;
 
+   // return sum;
+
+        //new_line.clear();       //for later use
 }
 
 
 
-void take_input(int row, int column)
+
+void controller_file(int row, int column)
 {
    ifstream ifile;              //delete previous file
    ifile.open("sakib.txt");
@@ -166,7 +223,7 @@ void take_input(int row, int column)
 }
 
 
-int main()
+/*int main()
 {
     //freopen("in","r",stdin);
     //int m=3,n=3;
@@ -181,4 +238,4 @@ int main()
     }
     cout<<"Inside function";
     save_transpose_file(3, 3);
-}
+}*/

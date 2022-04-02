@@ -44,13 +44,15 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    freopen("input.txt","r",stdin);
+    //freopen("input.txt","r",stdin);
 
 
     //linear_algebra_calculation();
 
     //input_controller();
-    solve_linear_equation();
+    //solve_linear_equation();
     //input_linear_programming();
+
+   save_transpose_file(3,3);
     return 0;
 }
