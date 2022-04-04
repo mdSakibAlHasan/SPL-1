@@ -73,6 +73,31 @@ vector<double> read_from_file(int row, int column,int index)
 }
 
 
+vector<double> read_one_line(int row, int column,int index)
+{
+    fstream myfile("sakib.txt");
+    double temp;
+    vector<double> line;
+
+    for(int i=0;i<row;i++){
+        for(int j=0;j<column;j++){
+            myfile>>temp;
+            if(j == (index)){
+                line.push_back(temp);
+            }
+        }
+
+    }
+
+    /*cout<<"\n check input ";
+    for(size_t i=0;i<line.size();i++){
+        cout<<line[i]<<" ";
+    }
+    cout<<endl;*/
+
+    return line;
+}
+
 
 
 void write_in_file(vector<double> line)
@@ -103,15 +128,15 @@ bool is_zero(vector<double>line, int index)
 void sample(int number)
 {
     vector<double> new_line,old_line;
-    old_line = read_from_file(0);
+    //old_line = read_from_file(0);
 
     for(int i=0;i<number;i++){
-        new_line = read_from_file(i+1);
+        //new_line = read_from_file(i+1);
         for(int j=number-1;j>i;j--){
 
             double ratio_col = old_line[j]/new_line[i];
 
-            old_line[i] -= ()
+           // old_line[i] -= ()
 
         }
     }
@@ -120,76 +145,36 @@ void sample(int number)
 
 void save_transpose_file(int number, int column)
 {
-    cout<<"uyurytuyt"<<endl;
+
+    //cout<<"uyurytuyt"<<endl;
     ofstream file_name("transpose.txt");
-    vector<double> new_line,old_line;
+    fstream myfile("sakib.txt");
+    double temp;
+    vector<double> first_line;
+    vector<double> line;
 
-    old_line = read_from_file(number, column, number-1);
-
-    for(size_t i=0;i<number;i++)
-    {
-        new_line = read_from_file(number, column, number-i-2);
-        for(size_t j=number-1;j>i;j--)
-        {
-            if(old_line[i] == 0){
-
-                for(int s=0;s<old_line.size();s++){
-                    cout<<old_line[s]<<" ";
-                }
-                cout<<endl;
-                continue;
-            }
-            else{
-                if(new_line[i] == 0){
-                    //exchange row
-                    /*for(size_t x =0;x<number;x++){
-                        double temp = arr[j][x];
-                        arr[j][x] = arr[j-1][x];
-                        arr[j-1][x] = temp;
-                    }*/
-                    vector<double> v1;
-                    v1.insert(v1.end(), new_line.begin(), new_line.end());
-                    new_line.clear();
-                    new_line.insert(new_line.end(), old_line.begin(), old_line.end());
-                    old_line.clear();
-                    old_line.insert(old_line.end(), new_line.begin(), new_line.end());
-
-                    for(int s=0;s<old_line.size();s++){
-                    cout<<old_line[s]<<" ";
-                    }
-                    cout<<endl;
-                    continue;
-                }
-
-               double req_ratio = old_line[i] / new_line[i];
-               //cout<<"Ratio "<<req_ratio<<endl;
-
-                for(size_t k =0;k<number;k++){
-                        //cout<<old_line[k]<<" "<<new_line[k]<<endl;
-                    old_line[k] = old_line[k] - req_ratio * new_line[k];
-                }
-
-                for(int s=0;s<old_line.size();s++){
-                    cout<<old_line[s]<<" ";
-                }
-                cout<<endl;
-            }
-        }
+    for(int j=0;j<number;j++){
+        myfile>>temp;
+        file_name<<temp<<"\t";
+        first_line.push_back(temp);
     }
-    //calculate determine
+    file_name<<endl;
 
-    /*double sum =1;
-    for(size_t i=0;i<number;i++){
-        //sum *= arr[i][i];
-        cout<<2
-    }*/
-    //cout<<"result is: "<<sum<<endl;
 
-   // return sum;
+    for(size_t i=1;i<number;i++)
+    {
+        myfile>>temp;
+        double rto = temp/first_line[0];
+        file_name<<0<<"\t";
+        for(size_t j=1;j<number;j++){
+            myfile>>temp;
+            temp -= (rto * first_line[j]);
+            file_name<<temp<<"\t";
+        }
+        file_name<<endl;
 
-        //new_line.clear();       //for later use
+    }
 }
-
 
 
 
