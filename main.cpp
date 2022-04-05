@@ -44,7 +44,7 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    //freopen("input.txt","r",stdin);
+    freopen("input.txt","r",stdin);
 
 
     //linear_algebra_calculation();
@@ -52,7 +52,7 @@ int main()
     //input_controller();
     //solve_linear_equation();
     //input_linear_programming();
-
-   find_det_of_matrix(3,3);
+    //create_matrix();
+   create_solution();
     return 0;
 }

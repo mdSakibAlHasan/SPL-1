@@ -1,7 +1,27 @@
 #include<bits/stdc++.h>
-//#include "linker.h"
+#include "linker.h"
 #include "linear.h"
+#define N 10000
 using namespace std;
+
+vector<double>last_line;
+
+
+void extract_last_line(int number)
+{
+    ifstream file_read("save_file.txt");
+    double temp;
+
+    for(int i=0;i<number;i++){
+        for(int j=0;j<=number;j++){
+            file_read>>temp;
+            if(j == number){
+                last_line.push_back(temp);
+            }
+        }
+    }
+
+}
 
 
 void transfer_file(int number)
@@ -67,7 +87,7 @@ double save_in_file(int number,int column)
 
 
 
-void find_det_of_matrix(int row, int column)
+double find_det_of_matrix(int row)
 {
     double result = 1,temp;
 
@@ -82,6 +102,91 @@ void find_det_of_matrix(int row, int column)
 
     result *= temp;
 
-    cout<<"Determine of matrix is "<<result<<endl;
-
+    //cout<<"Determine of matrix is "<<result<<endl;
+    return result;
 }
+
+
+double create_temp_file(int number, int index)
+{
+    ofstream file_write("sakib.txt");
+    ifstream file_read("save_file.txt");
+
+    double temp;
+
+    for(int i=0;i<number;i++){
+        for(int j=0;j<number;j++){
+            file_read>>temp;
+
+            if(index == j){
+                file_write<<last_line[i]<<"\t";
+            }
+            else{
+                file_write<<temp<<"\t";
+            }
+        }
+        file_read>>temp;
+        file_write<<endl;
+    }
+
+    file_read.close();
+    file_write.close();
+
+    return find_det_of_matrix(number);
+    //return 0;
+}
+
+
+void create_solution()
+{
+    /*This function use when user want to input only coefficient instate of
+    input whole equation*/
+    int number;
+    double result[N],temp_input;
+    cout<<"Input variable number: ";
+    cin>>number;
+
+    for(int i=1;i<=number;i++){
+        cout<<"vari"<<i<<" ";
+    }
+    cout<<"constant"<<endl;
+
+    ofstream save_file("save_file.txt");
+
+    for(int i=0;i<number;i++){           //take coefficient of variable
+        for(int j=0;j<number+1;j++){
+            cin>>temp_input;
+            save_file<<temp_input<<"\t";
+        }
+    }
+
+    save_file.close();
+    extract_last_line(number);
+
+    result[0] = create_temp_file(number,number);
+
+    //cout<<"Result "<<result[0]<<endl;
+
+    for(int i=0;i<number;i++){
+            //replace_column(number);
+            result[i+1] = create_temp_file(number,number-i-1);         //calculate determine of matrix
+    }
+
+
+    if(result[0] != 0){                         //divide by is not posible
+
+        cout<<"Solution is: "<<endl;                    //print solution
+        for(int i=1;i<=number;i++){
+            cout<<"variable"<<i<<": "<<(double)result[i]/(double)result[0]<<endl;
+        }
+    }
+    else{
+        if(check_infinite_solution(result, number)){
+		      cout<<"\n\n These equation has infinitely many solution"<<endl;
+         }
+	     else{
+              cout<<"\n\n These equation has no solution"<<endl;
+	     }
+    }
+}
+

@@ -14,4 +14,6 @@ int solve_linear_programming(string str[] , double matrix_2[SIZE][SIZE], char va
 void input_linear_programming();
 int check_data_type(char item);
 //void save_transpose_file(int number, int column);
-void find_det_of_matrix(int row, int column);
+//void find_det_of_matrix(int row, int column);
+bool check_infinite_solution(double result[], int number_of_variable);
+void create_solution();
