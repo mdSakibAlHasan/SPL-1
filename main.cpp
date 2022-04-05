@@ -53,6 +53,6 @@ int main()
     //solve_linear_equation();
     //input_linear_programming();
 
-   save_transpose_file(3,3);
+   find_det_of_matrix(3,3);
     return 0;
 }

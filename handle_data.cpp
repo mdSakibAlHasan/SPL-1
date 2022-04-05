@@ -1,172 +1,53 @@
-
 #include<bits/stdc++.h>
-#include "linker.h"
-//#define SIZE 100
+//#include "linker.h"
+#include "linear.h"
 using namespace std;
 
 
-
-double det_of_matrix(double arr[][100], unsigned int number)
+void transfer_file(int number)
 {
+    /*transfer data one file to another file*/
 
-    for(size_t i=0;i<number;i++)
+    double temp;
+
+    ifstream read_file("transpose.txt");
+    ofstream write_file("sakib.txt");
+
+    for(int i=0;i<number-1;i++)
     {
-        for(size_t j=number-1;j>i;j--)
+        for(int j=0;j<number-1;j++)
         {
-            if(arr[j][i] == 0){
-                continue;
-            }
-            else{
-                if(arr[j-1][i] == 0){
-                    //exchange row
-                    for(size_t x =0;x<number;x++){
-                        double temp = arr[j][x];
-                        arr[j][x] = arr[j-1][x];
-                        arr[j-1][x] = temp;
-                    }
-                    continue;
-                }
-
-               double req_ratio = arr[j][i] / arr[j-1][i];
-
-                for(size_t k =0;k<number;k++){
-                    arr[j][k] = arr[j][k] - req_ratio * arr[j-1][k];
-                }
-            }
+            read_file>>temp;
+            write_file<<temp<<"\t";
         }
-    }
-    //calculate determine
-
-    double sum =1;
-    for(size_t i=0;i<number;i++){
-        sum *= arr[i][i];
-    }
-    //cout<<"result is: "<<sum<<endl;
-
-    return sum;
-}
-
-
-vector<double> read_from_file(int row, int column,int index)
-{
-    fstream myfile("sakib.txt");
-    double temp;
-    vector<double> line;
-
-    for(int i=0;i<row;i++){
-        for(int j=0;j<column;j++){
-            myfile>>temp;
-            if(j == (index)){
-                line.push_back(temp);
-            }
-        }
-
-    }
-
-    /*cout<<"\n check input ";
-    for(size_t i=0;i<line.size();i++){
-        cout<<line[i]<<" ";
-    }
-    cout<<endl;*/
-
-    return line;
-}
-
-
-vector<double> read_one_line(int row, int column,int index)
-{
-    fstream myfile("sakib.txt");
-    double temp;
-    vector<double> line;
-
-    for(int i=0;i<row;i++){
-        for(int j=0;j<column;j++){
-            myfile>>temp;
-            if(j == (index)){
-                line.push_back(temp);
-            }
-        }
-
-    }
-
-    /*cout<<"\n check input ";
-    for(size_t i=0;i<line.size();i++){
-        cout<<line[i]<<" ";
-    }
-    cout<<endl;*/
-
-    return line;
-}
-
-
-
-void write_in_file(vector<double> line)
-{
-    fstream myfile("sakib.txt",ios::app);
-
-    for(int i=0;i<line.size();i++){
-        myfile<<line[i]<<"\t";
-    }
-    myfile<<endl;
-
-    myfile.close();
-}
-
-
-bool is_zero(vector<double>line, int index)
-{
-    for(int i=0;i<=index;i++){
-        if(line[i] == 0){
-            return true;
-        }
-    }
-
-    return false;
-}
-
-
-void sample(int number)
-{
-    vector<double> new_line,old_line;
-    //old_line = read_from_file(0);
-
-    for(int i=0;i<number;i++){
-        //new_line = read_from_file(i+1);
-        for(int j=number-1;j>i;j--){
-
-            double ratio_col = old_line[j]/new_line[i];
-
-           // old_line[i] -= ()
-
-        }
+        write_file<<endl;
     }
 }
 
 
-void save_transpose_file(int number, int column)
+double save_in_file(int number,int column)
 {
 
-    //cout<<"uyurytuyt"<<endl;
     ofstream file_name("transpose.txt");
-    fstream myfile("sakib.txt");
+    ifstream myfile("sakib.txt");
+
+
     double temp;
     vector<double> first_line;
-    vector<double> line;
 
-    for(int j=0;j<number;j++){
+
+    for(int j=0;j<number-column;j++){      //read first line and saved in file
         myfile>>temp;
-        file_name<<temp<<"\t";
         first_line.push_back(temp);
     }
-    file_name<<endl;
 
 
-    for(size_t i=1;i<number;i++)
+
+    for(int i=1;i<number-column;i++)            //make upper triangular and saved in file
     {
         myfile>>temp;
         double rto = temp/first_line[0];
-        file_name<<0<<"\t";
-        for(size_t j=1;j<number;j++){
+        for(int j=1;j<(number-column);j++){
             myfile>>temp;
             temp -= (rto * first_line[j]);
             file_name<<temp<<"\t";
@@ -174,53 +55,33 @@ void save_transpose_file(int number, int column)
         file_name<<endl;
 
     }
+
+    myfile.close();         //closing file
+    file_name.close();
+
+    transfer_file(number-column);
+
+
+    return first_line[0];
 }
 
 
 
-void controller_file(int row, int column)
+void find_det_of_matrix(int row, int column)
 {
-   ifstream ifile;              //delete previous file
-   ifile.open("sakib.txt");
-   if(ifile) {
-        if(remove("sakib.txt") != 0){
-            cout<<"Something went wrong. Couldn't complete this";
-        }
-   }
-   ifile.close();
+    double result = 1,temp;
 
-
-    vector<double> line;
-    double temp ;
-    //int row, column;
-
-    for(int i=0;i<row;i++){
-        for(int j=0;j<column;j++){
-            cin>>temp;
-            line.push_back(temp);
-        }
-
-        write_in_file(line);
-        line.clear();
+    for(int i=0;i<row-1;i++){
+        temp = save_in_file(row,i);
+        result *= temp;
     }
 
+    //last value need to calculate
+    ifstream read_file("sakib.txt");
+    read_file>>temp;
+
+    result *= temp;
+
+    cout<<"Determine of matrix is "<<result<<endl;
 
 }
-
-
-/*int main()
-{
-    //freopen("in","r",stdin);
-    //int m=3,n=3;
-    //cin>>m>>n;
-
-    //take_input(m,n);
-    vector<double> line;
-    line= read_from_file(3,3,1);
-
-    for(int i=0;i<line.size();i++){
-        cout<<line[i]<<" ";
-    }
-    cout<<"Inside function";
-    save_transpose_file(3, 3);
-}*/
