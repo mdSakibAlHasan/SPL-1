@@ -20,7 +20,8 @@ void linear_algebra_calculation()           //add infinite many solution
             solve_linear_equation();
         }
         else if(choice == 2){
-            create_matrix();
+            //create_matrix();
+            create_solution();
         }
         else{
             cout<<"Wrong input"<<endl;
@@ -44,15 +45,15 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    freopen("input.txt","r",stdin);
+    //freopen("input.txt","r",stdin);
 
 
-    //linear_algebra_calculation();
+    linear_algebra_calculation();
 
     //input_controller();
     //solve_linear_equation();
     //input_linear_programming();
     //create_matrix();
-   create_solution();
+   //create_solution();
     return 0;
 }

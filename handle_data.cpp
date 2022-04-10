@@ -5,7 +5,7 @@
 using namespace std;
 
 vector<double>last_line;
-
+//row reduction method for find determine of matrix
 
 void extract_last_line(int number)
 {
@@ -133,7 +133,6 @@ double create_temp_file(int number, int index)
     file_write.close();
 
     return find_det_of_matrix(number);
-    //return 0;
 }
 
 
