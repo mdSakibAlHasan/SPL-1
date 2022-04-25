@@ -47,7 +47,7 @@ int main()
 {
     //freopen("input.txt","r",stdin);
 
-
+   large_size_matrix();
     linear_algebra_calculation();
 
     //input_controller();

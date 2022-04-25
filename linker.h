@@ -17,3 +17,4 @@ int check_data_type(char item);
 //void find_det_of_matrix(int row, int column);
 bool check_infinite_solution(double result[], int number_of_variable);
 void create_solution();
+int large_size_matrix();
