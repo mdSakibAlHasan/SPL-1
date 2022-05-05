@@ -1,13 +1,21 @@
 #include<bits/stdc++.h>
 #include "linear.h"
-#define SIZE 20
+#define SIZE 100000
 #define phi 1e-12
 
 using namespace std;
 
 int n;
-double a[SIZE],b[SIZE],c[SIZE], r, s, old_r, old_s,dr,ds,root_p, root_q;
-bool last = false;          //for last rest equation
+double *a,*b,*c, r, s, old_r, old_s,dr,ds,root_p, root_q;
+bool last = false;
+       //for last rest equation
+
+void initialize_array()
+{
+    a = new double[SIZE];
+    b = new double[SIZE];
+    c = new double[SIZE];
+}
 
 
 double absolute(double x)
@@ -211,6 +219,8 @@ void find_root()
 
 void starting_method(double pass[], int total)
 {
+
+    initialize_array();         //initialize array as dynamic for controll million of data
     //copy array to global array
     for(int i= total;i>=0;i--){
         a[i] = pass[i];

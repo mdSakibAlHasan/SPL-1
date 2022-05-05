@@ -66,6 +66,7 @@ void organize_table()
     }
 
     key = INT_MAX;
+
     for(int i=0;i<number_of_equation;i++){
         ratio_value[i] = matrix_2[i][number_of_equation+number_of_variable]/matrix_2[i][key_col];
         if(key>ratio_value[i]){
@@ -84,6 +85,7 @@ void organize_table()
     for(int i=0;i<=number_of_equation+number_of_variable;i++){
         row[i] = matrix_2[key_row][i];
     }
+
     for(int i=0;i<=number_of_equation+number_of_variable;i++){
         column[i] = matrix_2[i][key_col];
     }
@@ -284,22 +286,16 @@ void input_linear_programming()
         convert_to_equation(str[i], i);
     }
 
-
     cout<<"Enter objective equation: ";
     getline(cin,str[number_of_equation]);
 
     convert_to_equation(str[number_of_equation], number_of_equation);
 
 
-
-
     number_of_variable = solve_linear_programming(str,matrix_2,vari_name, number_of_equation+1);
 
     cout<<" number of "<<number_of_variable<<endl;
-
-
     cout<<"\n\n\n\n\n";
-
 
     create_table();
 
