@@ -17,6 +17,14 @@ void initialize_array()
     c = new double[SIZE];
 }
 
+void delete_array()
+{
+    delete a;
+    delete b;
+    delete c;
+
+}
+
 
 double absolute(double x)
 {
@@ -96,8 +104,9 @@ void print_root(double x,double p, double q)
         }
     }
     else{
+        //cout<<determine<<endl;
         determine = sqrt(determine);
-
+        //cout<<determine<<endl;
         double first = remove_error(((-p) - determine)/(2*x));
         double second =  remove_error(((-p) + determine)/(2*x));
 
@@ -112,8 +121,8 @@ void print_root(double x,double p, double q)
 void print_root_one(double x, double y)
 {
     // If existance equation has only one solution
-    x *= -1;
-    y *= -1;
+    //x *= -1;
+    //y *= -1;
 
     double root = -(y/x);
 
@@ -181,6 +190,7 @@ void find_root()
         print_root_one(a[n], a[n-1]);
     }
     else if(n == 2){
+        last = true;
         print_root(a[n] , a[n-1] , a[n-2]);
     }
     else{
@@ -224,6 +234,7 @@ void starting_method(double pass[], int total)
     //copy array to global array
     for(int i= total;i>=0;i--){
         a[i] = pass[i];
+        //cout<<" - "<<a[i]<<endl;
 
     }
     n = total;
@@ -241,5 +252,8 @@ void starting_method(double pass[], int total)
     }
 
     find_root();
+
+    delete_array();         //deallocate memmory
+    return;
 }
 

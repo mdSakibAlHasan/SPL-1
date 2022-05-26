@@ -200,7 +200,7 @@ void add_slug_variable()
 
                         matrix_2[i][number_of_variable+j] = 1;
                     }
-                    else{
+                    else if(trace[i] == GRATER_THAN){
                         matrix_2[i][number_of_variable+j] = -1;
                     }
                 }
@@ -224,6 +224,8 @@ void create_table()
     char temp[SIZE];
     add_slug_variable();
 
+
+    //trmporary for standard form
         cout<<"\n\n in standard form\n";
     for(int i=0;i<=number_of_equation;i++){
         cout<<vari_name[i]<<"\t";
@@ -326,26 +328,7 @@ void input_linear_programming()
 
     convert_to_equation(str[number_of_equation], number_of_equation);
 
-    //re_arrange_matrix(number_of_equation);
-
-    cout<<"\n\nVariable print here: "<<endl;
-    for(int i=0;i<=number_of_equation;i++){
-        cout<<str[i]<<endl;
-    }
-
-
     number_of_variable = solve_linear_programming(str,matrix_2,vari_name, number_of_equation+1);
-
-    cout<<" \n number of "<<number_of_variable<<endl;
-    cout<<"\n\n\n\n\n";
-    for(int i=0;i<=number_of_equation;i++){
-        cout<<vari_name[i]<<"\t";
-        for(int k=0;k<=number_of_equation;k++){
-            cout<<matrix_2[i][k]<<"\t";
-        }
-        cout<<endl;
-    }
-
 
     create_table();
 

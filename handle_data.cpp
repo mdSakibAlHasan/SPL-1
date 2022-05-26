@@ -188,4 +188,3 @@ void create_solution()
 	     }
     }
 }
-

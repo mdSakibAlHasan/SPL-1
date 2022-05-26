@@ -174,10 +174,6 @@ void input_controller()
 
 
     int highest_power = organize_equation(str);
-
-
     starting_method(save, highest_power);
 
 }
-
-
