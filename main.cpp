@@ -45,14 +45,14 @@ void linear_algebra_calculation()           //add infinite many solution
 
 int main()
 {
-    //freopen("input.txt","r",stdin);
+    freopen("in.txt","r",stdin);
 
-   large_size_matrix();
-    linear_algebra_calculation();
+   //large_size_matrix();
+    //linear_algebra_calculation();
 
     //input_controller();
     //solve_linear_equation();
-    //input_linear_programming();
+    input_linear_programming();
     //create_matrix();
    //create_solution();
     return 0;

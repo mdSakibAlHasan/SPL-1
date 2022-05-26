@@ -12,6 +12,7 @@ int trace[SIZE],number_of_equation, number_of_variable;
 double matrix_2[SIZE][SIZE]={0},CB_value[SIZE]={0},ratio_value[SIZE],final_value[SIZE];
 char vari_name[SIZE][20],basic_variable[SIZE][20];
 bool isMax;
+string line[SIZE];
 
 
 bool isAllSame()
@@ -171,6 +172,24 @@ void check_critical_value()
 }
 
 
+void make_standard_form()
+{
+    for(int i=0;i<number_of_equation;i++){
+        if(trace[i] == GRATER_THAN){
+            for(int k=0;k<=number_of_equation+number_of_variable;k++){
+                matrix_2[i][k] *= -1;
+            }
+        }
+    }
+
+    if(!isMax){
+        for(int i=0;i<number_of_equation;i++){
+            matrix_2[number_of_equation][i] *= -1;
+        }
+    }
+}
+
+
 void add_slug_variable()
 {
     for(int i=0;i<number_of_equation;i++){
@@ -191,17 +210,28 @@ void add_slug_variable()
 
         }
 
+        temp *= -1;
         matrix_2[i][number_of_equation+number_of_variable] = temp;
     }
 
+    make_standard_form();
 }
 
 
 
 void create_table()
 {
-    char temp[20];
+    char temp[SIZE];
     add_slug_variable();
+
+        cout<<"\n\n in standard form\n";
+    for(int i=0;i<=number_of_equation;i++){
+        cout<<vari_name[i]<<"\t";
+        for(int k=0;k<=number_of_equation+number_of_variable;k++){
+            cout<<matrix_2[i][k]<<"\t";
+        }
+        cout<<endl;
+    }
 
     for(int i=number_of_variable;i<number_of_equation+number_of_variable;i++){
         temp[0] = 's';
@@ -224,6 +254,13 @@ void create_table()
 
 void remove_less_grater_sign(string &str, int index)
 {
+
+    if(str[index+1] != '=' )
+    {
+        str[index] = '=';
+        return;
+    }
+
 	while(str[index]){
 		str[index] = str[index+1];
 		index++;
@@ -254,7 +291,6 @@ void convert_to_equation(string &str, int equation_index_number)
 
 
 
-
 void input_linear_programming()
 {
     cout<<"\n\n\t\t WELLCOME TO LINEAR PROGRAMMING SOLVER\n\n\n\n\n";
@@ -282,7 +318,6 @@ void input_linear_programming()
     for(int i=0;i<number_of_equation;i++){
         getline(cin,str[i]);
 
-
         convert_to_equation(str[i], i);
     }
 
@@ -291,11 +326,26 @@ void input_linear_programming()
 
     convert_to_equation(str[number_of_equation], number_of_equation);
 
+    //re_arrange_matrix(number_of_equation);
+
+    cout<<"\n\nVariable print here: "<<endl;
+    for(int i=0;i<=number_of_equation;i++){
+        cout<<str[i]<<endl;
+    }
+
 
     number_of_variable = solve_linear_programming(str,matrix_2,vari_name, number_of_equation+1);
 
-    cout<<" number of "<<number_of_variable<<endl;
+    cout<<" \n number of "<<number_of_variable<<endl;
     cout<<"\n\n\n\n\n";
+    for(int i=0;i<=number_of_equation;i++){
+        cout<<vari_name[i]<<"\t";
+        for(int k=0;k<=number_of_equation;k++){
+            cout<<matrix_2[i][k]<<"\t";
+        }
+        cout<<endl;
+    }
+
 
     create_table();
 
