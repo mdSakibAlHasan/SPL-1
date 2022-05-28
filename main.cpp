@@ -1,12 +1,10 @@
 #include <bits/stdc++.h>
 #include "linker.h"
-
-
 using namespace std;
 
 void linear_algebra_calculation()           //add infinite many solution
 {
-    while(1){
+
         cout<<"\n\n\n\t\t\t\t WELCOME TO EQUATON SOLVER\n\n\n";
         int choice;
         cout<<"\t\t1.Linear algebra\n\t\t2.Linear programming\n\t\t3.Polynomial equation\n\t\t4.Exit\n\n..........";
@@ -14,10 +12,10 @@ void linear_algebra_calculation()           //add infinite many solution
         //getchar();
         if(choice == 1){
             cout<<"\n\n\n\n\t\t1. Input equation\n\t\t 2.Input coefficient of equation\n.........."<<endl;
-
+            //getchar();
             cin>>choice;
 
-            if(choice == 2){
+            if(choice == 1){
                 solve_linear_equation();
             }
             else if(choice == 2){
@@ -40,18 +38,19 @@ void linear_algebra_calculation()           //add infinite many solution
             cout<<"Wrong input"<<endl;
         }
 
-    }
+        return;
+
 }
 
 
 
 int main()
 {
-   // freopen("in.txt","r",stdin);
+    //freopen("in.txt","r",stdin);
 
-
-    linear_algebra_calculation();
-
+    while(1){
+        linear_algebra_calculation();
+    }
 
     //input_linear_programming();
 

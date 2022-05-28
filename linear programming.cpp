@@ -14,18 +14,49 @@ char vari_name[SIZE][20],basic_variable[SIZE][20];
 bool isMax;
 string line[SIZE];
 
+void print_table()
+{
+    cout<<"\n\nHere are table: \n\n";
+    cout<<"Objective: ";
+    for(int i=0;i<number_of_equation+number_of_variable;i++){
+        cout<<matrix_2[number_of_equation][i]<<"\t";
+    }
+    cout<<"const\t"<<"min ratio\t"<<endl;
+
+    cout<<"CB\tco_Basis\t";
+    for(int i=0;i<number_of_equation+number_of_variable;i++){
+        cout<<vari_name[i]<<"\t";
+    }
+    cout<<endl;
+
+    for(int i=0;i<number_of_equation;i++){
+            cout<<CB_value[i]<<"\t"<<basic_variable[i]<<"\t";
+        for(int j=0;j<=number_of_equation+number_of_variable;j++){
+            cout<<matrix_2[i][j]<<"\t";
+        }
+        cout<<ratio_value[i]<<endl;
+    }
+
+    cout<<"Zj - Cj :\t";
+    for(int j=0;j<=number_of_equation+number_of_variable;j++){
+            cout<<final_value[j]<<"\t";
+    }
+
+    cout<<"\n\n\n";
+}
+
 
 bool isAllSame()
 {
 
     for(int i=0;i<=number_of_equation+number_of_equation;i++){
         if(isMax){
-            if(final_value[i]>0){
+            if(final_value[i]<0){
                 return false;
             }
         }
         else{
-            if(final_value[i]<0){
+            if(final_value[i]>0){
                 return false;
             }
         }
@@ -38,16 +69,16 @@ bool isAllSame()
 
 void calculate_table()
 {
-
+    //print_table();
     for(int i=0;i<=number_of_equation+number_of_variable;i++){
         final_value[i] = 0;
         for(int j=0;j<number_of_equation;j++){
             final_value[i] += (CB_value[j]*matrix_2[j][i]);
         }
 
-        final_value[i] = ( matrix_2[number_of_equation][i] - final_value[i]);
+        final_value[i] = ( final_value[i] - matrix_2[number_of_equation][i]);
     }
-
+    //print_table();
 }
 
 
@@ -60,7 +91,7 @@ void organize_table()
     double key= final_value[0];
 
     for(int i=1;i<=number_of_equation+number_of_equation;i++){
-            if(final_value[i]>key){
+            if(final_value[i]<key){
                 key = final_value[i];
                 key_col = i;
             }
@@ -76,29 +107,33 @@ void organize_table()
         }
     }
 
+    //cout<<"key row: "<<key_row<<" "<<key_col<<endl;
 
     strcpy(basic_variable[key_row],vari_name[key_col]);
     CB_value[key_row] = matrix_2[number_of_equation][key_col];
 
 
     key = matrix_2[key_row][key_col];               //save key value
+    //cout<<"key: "<<key<<endl;
 
     for(int i=0;i<=number_of_equation+number_of_variable;i++){
         row[i] = matrix_2[key_row][i];
+        //cout<<row[i]<<"\t";
     }
+
 
     for(int i=0;i<=number_of_equation+number_of_variable;i++){
         column[i] = matrix_2[i][key_col];
+        //cout<<column[i]<<"\t";
     }
 
-
-    for(int i=0;i<=number_of_equation+number_of_equation;i++){
+    for(int i=0;i<=number_of_equation+number_of_variable;i++){
         matrix_2[key_row][i] = matrix_2[key_row][i]/key;
     }
 
     //save key and col key for further calculation
     for(int j=0;j<number_of_equation;j++){
-        for(int i=0;i<=number_of_equation+number_of_equation;i++){
+        for(int i=0;i<=number_of_equation+number_of_variable;i++){
             if(j == key_row){
                 continue;
             }
@@ -118,25 +153,16 @@ void organize_table()
 
 void print_value()
 {
-    if(final_value[number_of_equation+number_of_variable]!=0){
-        final_value[number_of_equation+number_of_variable] *= -1;
-    }
-
-    cout<<"\n print value all"<<endl;
-    for(int i=0;i<=number_of_equation+number_of_variable;i++){
-        cout<<vari_name[i]<<" "<<CB_value[i]<<endl;
-    }
-    cout<<"end \n\n\n";
-
+    cout<<"\n\n\n";
     int j;
     for(int i=0;i<number_of_variable;i++){
         for(j=0;j<number_of_equation;j++){
             if(strcmp(basic_variable[j],vari_name[i]) == 0){
-                cout<<vari_name[i]<<": "<<CB_value[j]<<endl;
+                cout<<vari_name[i]<<": "<<matrix_2[j][number_of_equation+number_of_variable]<<endl;
                 break;
             }
         }
-        if(j == number_of_variable){
+        if(j == number_of_equation){
             cout<<vari_name[i]<<": 0"<<endl;
         }
     }
@@ -225,16 +251,6 @@ void create_table()
     add_slug_variable();
 
 
-    //trmporary for standard form
-        cout<<"\n\n in standard form\n";
-    for(int i=0;i<=number_of_equation;i++){
-        cout<<vari_name[i]<<"\t";
-        for(int k=0;k<=number_of_equation+number_of_variable;k++){
-            cout<<matrix_2[i][k]<<"\t";
-        }
-        cout<<endl;
-    }
-
     for(int i=number_of_variable;i<number_of_equation+number_of_variable;i++){
         temp[0] = 's';
         temp[1] = (i-number_of_variable) + '0';
@@ -243,6 +259,10 @@ void create_table()
         strcpy(vari_name[i],temp);
         strcpy(basic_variable[i-number_of_variable],temp);
 
+    }
+
+    for(int i=0;i<number_of_equation;i++){
+        matrix_2[i][number_of_equation+number_of_variable] *= -1;
     }
 
     check_critical_value();
