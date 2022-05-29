@@ -91,7 +91,11 @@ void organize_table()
     double key= final_value[0];
 
     for(int i=1;i<=number_of_equation+number_of_equation;i++){
-            if(final_value[i]<key){
+            if(final_value[i]<key && isMax){
+                key = final_value[i];
+                key_col = i;
+            }
+            else if(final_value[i]>key && !isMax){
                 key = final_value[i];
                 key_col = i;
             }
@@ -171,7 +175,7 @@ void print_value()
         cout<<"\nMaximum value is "<<final_value[number_of_equation+number_of_variable]<<endl;
     }
     else{
-        cout<<"\nMinimum value is "<<final_value[number_of_equation+number_of_variable]<<endl;
+        cout<<"\nMinimum value is "<<abs(final_value[number_of_equation+number_of_variable])<<endl;
     }
 
 
@@ -191,7 +195,7 @@ void check_critical_value()
         do{
             organize_table();
     i++;
-        }while(!isAllSame() && i<5);
+        }while(!isAllSame() && i<15);
 
         print_value();
     }
